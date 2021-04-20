@@ -1,8 +1,7 @@
 <template>
   <div class="home">
     <v-container>
-
-      <Rooms/>
+      <Login/>
     </v-container>
 
 
@@ -12,10 +11,11 @@
 <script>
 
 import Rooms from "@/components/Rooms";
+import Login from "@/components/Login";
 export default {
   name: 'Home',
   components: {
-    Rooms,
+    Login
   }
 }
 </script>

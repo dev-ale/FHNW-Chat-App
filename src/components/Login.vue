@@ -16,13 +16,15 @@
                   outline
                   label="E-Mail"
                   type="text"
-                  v-model="email"></v-text-field>
+                  v-model="email">
+              </v-text-field>
               <v-text-field
                   outline
                   hide-details
                   label="Password"
                   type="password"
-                  v-model="password"></v-text-field>
+                  v-model="password">
+              </v-text-field>
 
             </v-form>
           </v-card-text>
@@ -32,7 +34,7 @@
               Registrieren
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn dark color="primary" :large="$vuetify.breakpoint.smAndUp">
+            <v-btn @click="login" dark color="primary" :large="$vuetify.breakpoint.smAndUp">
               <v-icon left>mdi-lock</v-icon>
               Anmelden
             </v-btn>
@@ -42,7 +44,7 @@
       <v-flex sm12 md6 offset-md3>
         <v-layout align-center justify-space-between justify-center>
           <v-spacer/>
-          <p class="caption my-3">Made with ♥️  by <strong class="primary--text">David & Alejandro</strong></p>
+          <p class="caption my-3">Made with ♥️ by <strong class="primary--text">David & Alejandro</strong></p>
           <v-spacer/>
         </v-layout>
       </v-flex>
@@ -53,30 +55,29 @@
 <script>
 import router from "../router"
 import axios from "axios"
+
 export default {
   name: "Login",
+  data: () => ({
+      email: null,
+      password: null
+  }),
   methods: {
-    login: (e) => {
-      e.preventDefault()
-      let email = "user@email.com"
-      let password = "password"
-      let login = () => {
-        let data = {
-          email: email,
-          password: password
-        }
-        axios.post("/api/login", data)
-            .then((response) => {
-              console.log("Logged in")
-              console.log(response)
-              router.push("/dashboard")
-            })
-            .catch((errors) => {
-              console.log("Cannot log in")
-              console.log(errors)
-            })
-      }
-      login()
+    login() {
+      let data = {
+        email: this.email,
+        password: this.password
+      };
+      axios.post("/api/user/login", data)
+          .then((response) => {
+            console.log("Logged in")
+            console.log(response)
+            router.push("/dashboard")
+          })
+          .catch((errors) => {
+            console.log("Cannot log in")
+            console.log(errors)
+          })
     }
   }
 }
