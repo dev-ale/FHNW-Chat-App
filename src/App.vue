@@ -2,11 +2,11 @@
   <v-app>
     <v-app-bar
       app
-      color="teal"
+      color="primary"
       dark
     >
       <v-spacer></v-spacer>
-      <h2>WebEngineering</h2>
+      <h2>fhnw - clubHouse</h2>
       <v-spacer></v-spacer>
 
       <v-btn
