@@ -23,7 +23,6 @@
     "serve-static": "^1.14.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vue-webrtc": "^1.2.2",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0",
     "vuex-persistedstate": "^4.0.0-beta.3"

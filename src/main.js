@@ -5,8 +5,8 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
-import {WebRTC} from 'vue-webrtc'
-Vue.component(WebRTC.name, WebRTC)
+
+
 
 const token = localStorage.getItem('auth-token')
 if (token) {
@@ -19,6 +19,5 @@ new Vue({
   router,
   store,
   vuetify,
-  WebRTC,
   render: h => h(App)
 }).$mount('#app')
