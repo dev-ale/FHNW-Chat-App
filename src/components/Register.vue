@@ -61,6 +61,8 @@ export default {
           .then((response) => {
             console.log("Logged in")
             console.log(response)
+            console.log(response.headers["auth-token"])
+
             router.push("/dashboard")
           })
           .catch((errors) => {

@@ -31,6 +31,7 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <h1>Name: {{name}}</h1>
   </v-container>
 </template>
 
@@ -41,8 +42,8 @@ import axios from "axios"
 export default {
   name: "Login",
   data: () => ({
-    email: "",
-    password: "",
+    email: "ale.iphone@gmail.com",
+    password: "Wikipedia91",
     name: ""
   }),
   methods: {
@@ -53,8 +54,10 @@ export default {
       };
       axios.post("/api/user/login", data)
           .then((response) => {
-            console.log("Logged in")
+            console.log(response.data)
             console.log(response)
+            this.username = response.data["name"]
+            const authtoken = response.headers["auth-token"];
             router.push("/dashboard")
           })
           .catch((errors) => {
