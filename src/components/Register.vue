@@ -70,7 +70,17 @@ export default {
             console.log(errors)
           })
     },
-    register() {
+    register: function () {
+      const { name, email, password } = this
+      this.$store.dispatch('AUTH_REGISTER', { name, email, password }).then(() => {
+        this.$store.dispatch('AUTH_REQUEST',{email,password}).then(() => {
+          this.$router.go()
+          this.$router.push('/dashboard')
+        })
+
+      })
+    },
+    register2() {
       let data = {
         name: this.name,
         email: this.email,

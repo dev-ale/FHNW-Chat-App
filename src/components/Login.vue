@@ -31,13 +31,13 @@
         </v-card>
       </v-flex>
     </v-layout>
-    <h1>Name: {{name}}</h1>
   </v-container>
 </template>
 
 <script>
 import router from "../router"
 import axios from "axios"
+import store from '../store'
 
 export default {
   name: "Login",
@@ -47,7 +47,14 @@ export default {
     name: ""
   }),
   methods: {
-    login() {
+    login: function () {
+      const { email, password } = this
+      this.$store.dispatch('AUTH_REQUEST', { email, password }).then(() => {
+        this.$router.go()
+        this.$router.push('/dashboard')
+      })
+    }
+    /*login() {
       let data = {
         email: this.email,
         password: this.password
@@ -64,7 +71,7 @@ export default {
             console.log("Cannot log in")
             console.log(errors)
           })
-    }
+    }*/
   }
 }
 </script>

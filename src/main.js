@@ -8,6 +8,10 @@ import vuetify from './plugins/vuetify';
 import {WebRTC} from 'vue-webrtc'
 Vue.component(WebRTC.name, WebRTC)
 
+const token = localStorage.getItem('auth-token')
+if (token) {
+  axios.defaults.headers.common['auth-token'] = token
+}
 
 Vue.config.productionTip = false
 

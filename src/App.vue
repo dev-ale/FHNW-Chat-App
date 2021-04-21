@@ -12,25 +12,20 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn
-          icon
-          href="https://github.com/dev-ale/WebEngineering"
-          target="_blank"
-      >
-        <v-icon>mdi-github</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
+      <v-btn v-if="$store.getters.isAuthenticated" color="red" @click="logout">
+        <v-icon class="ml-1">mdi-lock</v-icon>
+        Logout
       </v-btn>
 
       <template v-slot:extension>
         <v-tabs align-with-title>
-          <v-tab to="/">Home</v-tab>
-          <v-tab to="/register">Register</v-tab>
-          <v-tab to="/login">Login</v-tab>
+          <v-tab v-if="!$store.getters.isAuthenticated" to="/">Home</v-tab>
+
           <v-tab to="/about">About</v-tab>
-          <v-tab to="/dashboard">Dashboard</v-tab>
+          <v-tab v-if="$store.getters.isAuthenticated" to="/dashboard">Dashboard</v-tab>
+          <v-spacer></v-spacer>
+<!--          <v-tab v-if="!$store.getters.isAuthenticated" to="/register">Register</v-tab>-->
+<!--          <v-tab v-if="!$store.getters.isAuthenticated" to="/login">Login</v-tab>-->
         </v-tabs>
       </template>
     </v-app-bar>
@@ -47,7 +42,15 @@
 import Home from "@/views/Home";
 export default {
   name: 'App',
-
+  methods:  {
+    logout: function () {
+      this.$store.dispatch('AUTH_LOGOUT')
+          .then(() => {
+            this.$router.go()
+            this.$router.push('/login')
+          })
+    }
+  },
   components: {
     Home
 

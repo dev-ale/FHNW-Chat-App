@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
 import Dashboard from "@/views/Dashboard";
 import About from "@/views/About";
@@ -9,21 +10,40 @@ import Register from "@/components/Register";
 
 Vue.use(VueRouter)
 
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/dashboard')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/login')
+}
+
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: "/register",
     name: "Register",
-    component: Register
+    component: Register,
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: '/about',
@@ -33,7 +53,8 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    component: Dashboard
+    component: Dashboard,
+    beforeEnter: ifAuthenticated,
   }
 ]
 
