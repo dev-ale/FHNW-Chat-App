@@ -6,6 +6,10 @@
         dark
         flat
     >
+      <v-btn v-if="$store.getters.isAuthenticated" color="primary">
+        <v-icon class="ml-1">mdi-account</v-icon>
+        {{ $store.getters.getUsername }}
+      </v-btn>
       <v-spacer></v-spacer>
 
       <v-app-bar-title><h2>WebEngineering</h2></v-app-bar-title>
