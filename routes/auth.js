@@ -6,6 +6,7 @@ const {registerValidation, loginValidation } = require('../validation');
 
 // REGISTER
 router.post('/register', async (req, res) => {
+    console.log('route/register called')
     // Validate Data before creating new user
     const { error } = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -34,6 +35,7 @@ router.post('/register', async (req, res) => {
 
 //LOGIN
 router.post('/login', async (req, res) => {
+    console.log('route/login called');
     // Validate Data before login in user
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);

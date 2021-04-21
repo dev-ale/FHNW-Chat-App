@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from "@/components/Login"
 import Home from '../views/Home.vue'
+import Dashboard from "@/views/Dashboard";
+import About from "@/views/About";
+import Login from "@/components/Login";
+import Register from "@/components/Register";
+
 
 Vue.use(VueRouter)
 
@@ -12,18 +16,29 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: "/register",
+    name: "Register",
+    component: Register
   },
   {
     path: "/login",
     name: "Login",
     component: Login
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard
   }
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

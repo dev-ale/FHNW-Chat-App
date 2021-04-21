@@ -8,6 +8,12 @@
             <v-form>
               <v-text-field
                   outline
+                  label="Name"
+                  type="text"
+                  v-model="name">
+              </v-text-field>
+              <v-text-field
+                  outline
                   label="E-Mail"
                   type="text"
                   v-model="email">
@@ -24,8 +30,8 @@
           <v-divider></v-divider>
           <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
             <v-spacer></v-spacer>
-            <v-btn @click="login" dark color="primary" >
-              Login
+            <v-btn @click="register" dark color="primary" >
+              Registrieren
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -35,11 +41,11 @@
 </template>
 
 <script>
-import router from "../router"
-import axios from "axios"
+import axios from "axios";
+import router from "@/router";
 
 export default {
-  name: "Login",
+  name: "Register",
   data: () => ({
     email: "",
     password: "",
@@ -59,6 +65,24 @@ export default {
           })
           .catch((errors) => {
             console.log("Cannot log in")
+            console.log(errors)
+          })
+    },
+    register() {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      };
+      axios.post("/api/user/register", data)
+          .then((response) => {
+            console.log("Registered User")
+            this.login()
+            console.log(response)
+            router.push("/dashboard")
+          })
+          .catch((errors) => {
+            console.log("Cannot register")
             console.log(errors)
           })
     }

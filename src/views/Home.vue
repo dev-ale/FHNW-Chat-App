@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <v-container>
-      <Login/>
+      <router-view/>
     </v-container>
 
 
@@ -10,12 +10,13 @@
 
 <script>
 
-import Rooms from "@/components/Rooms";
-import Login from "@/components/Login";
 export default {
   name: 'Home',
   components: {
-    Login
+
+  },
+  methods: {
+
   }
 }
 </script>
