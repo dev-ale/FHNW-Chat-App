@@ -1,11 +1,12 @@
 <template>
-  <div class="home">
-    <v-container>
-      <router-view/>
-    </v-container>
+  <v-container>
+    <v-row>
+      <v-col align="center">
+        <h2 class="white--text">welcome</h2>
+      </v-col>
+    </v-row>
 
-
-  </div>
+  </v-container>
 </template>
 
 <script>

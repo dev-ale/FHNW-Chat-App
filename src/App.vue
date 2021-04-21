@@ -36,7 +36,7 @@
     </v-app-bar>
 
     <v-main class="primary">
-      <home/>
+      <router-view/>
     </v-main>
   </v-app>
 </template>
