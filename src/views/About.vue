@@ -20,10 +20,11 @@
             <v-list>
               <v-list-item>Registrieren</v-list-item>
               <v-list-item>Einloggen</v-list-item>
-              <v-list-item>Verificication</v-list-item>
-              <v-list-item>protected routes</v-list-item>
-              <v-list-item>https</v-list-item>
-              <v-list-item>REST api requests</v-list-item>
+              <v-list-item>Input Validation</v-list-item>
+              <v-list-item>Passwort Encryption</v-list-item>
+              <v-list-item>Protected Routes</v-list-item>
+              <v-list-item>HTTPS</v-list-item>
+              <v-list-item>REST API Requests</v-list-item>
 
             </v-list>
           </v-col>
