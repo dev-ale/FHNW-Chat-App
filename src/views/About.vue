@@ -23,10 +23,14 @@
               <v-list-item>Input Validation</v-list-item>
               <v-list-item>Passwort Encryption</v-list-item>
               <v-list-item>Protected Routes</v-list-item>
-              <v-list-item>HTTPS</v-list-item>
-              <v-list-item>REST API Requests</v-list-item>
+              <v-list-item>HTTPS & REST API Requests</v-list-item>
 
             </v-list>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col align="center">
+            <h2>example room ui</h2>
           </v-col>
         </v-row>
         <v-row>
