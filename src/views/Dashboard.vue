@@ -3,6 +3,11 @@
     <v-card height="700">
       <v-card-text>
         <v-card-title>Hallo, {{ username }}</v-card-title>
+        <v-row>
+          <v-col>
+            <Room/>
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
   </v-container>
@@ -10,8 +15,10 @@
 </template>
 
 <script>
+import Room from "@/components/Room";
 export default {
 name: "Dashboard",
+  components: {Room},
   data: () => ({
 
   }),
