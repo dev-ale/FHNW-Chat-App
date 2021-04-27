@@ -6,9 +6,10 @@
         dark
         flat
     >
-      <v-btn v-if="$store.getters.isAuthenticated" color="primary">
+<!--      -->
+      <v-btn small v-if="$store.getters.isAuthenticated" color="primary">
         <v-icon class="ml-1">mdi-account</v-icon>
-        {{ $store.getters.getUsername }}
+        <div v-if="!$vuetify.breakpoint.mobile">{{ $store.getters.getUsername }}</div>
       </v-btn>
       <v-spacer></v-spacer>
 
@@ -16,9 +17,9 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn v-if="$store.getters.isAuthenticated" color="red" @click="logout">
+      <v-btn small v-if="$store.getters.isAuthenticated" color="red" @click="logout">
         <v-icon class="ml-1">mdi-lock</v-icon>
-        Logout
+        <div v-if="!$vuetify.breakpoint.mobile">Logout</div>
       </v-btn>
 
       <template v-slot:extension>
@@ -54,6 +55,9 @@ export default {
             this.$router.push('/login')
           })
     }
+  },
+  mounted () {
+    console.log(this.$vuetify.breakpoint.mobile)
   },
   components: {
     Home
