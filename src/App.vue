@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$vuetify.breakpoint.mobile)
+
   },
   components: {
     Home

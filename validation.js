@@ -19,6 +19,17 @@ const loginValidation = (data) => {
     return schema.validate(data);
 };
 
+// Room Validation
+const roomValidation = (data) => {
+    const schema = Joi.object({
+        name: Joi.string().min(3).required(),
+        type: Joi.string().min(3).required(),
+        creator: Joi.string().min(6).required(),
+    });
+    return schema.validate(data);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.roomValidation = roomValidation;
 

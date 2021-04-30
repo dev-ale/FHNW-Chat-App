@@ -9,12 +9,14 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('auth-token') || '',
     status: '',
-    username: 'user'
+    username: 'user',
+    rooms: []
   },
   getters: {
     isAuthenticated: state => !!state.token,
     authStatus: state => state.status,
-    getUsername: state => state.username
+    getUsername: state => state.username,
+    getRooms: state => state.rooms
   },
   mutations: {
     AUTH_REQUEST: (state) => {
@@ -28,12 +30,26 @@ export default new Vuex.Store({
       state.status = 'error'
     },
     SET_USERNAME: (state, username) => {
-      console.log(state.username)
       state.username = username
-      console.log(state.username)
+    },
+    SET_ROOMS: (state, rooms) => {
+        state.rooms = rooms
     },
   },
   actions: {
+  ROOMS: ({commit, dispatch}) => {
+      return new Promise((resolve, reject) => {
+          axios({url: 'api/dashboard/', method: 'GET' })
+              .then(resp => {
+                  const rooms = resp.data
+                  commit('SET_ROOMS', rooms)
+                  resolve(resp)
+              })
+              .catch(err => {
+                  reject(err)
+              })
+      })
+  },
     AUTH_REQUEST: ({commit, dispatch}, user) => {
       return new Promise((resolve, reject) => { // The Promise used for router redirect in login
         commit('AUTH_REQUEST')

@@ -2,16 +2,28 @@
   <v-container>
     <v-card height="700">
       <v-card-text>
-        <v-card-title>Hallo, {{ username }}</v-card-title>
+        <v-card-title>
+          <v-row>
+            <v-col>
+              Hallo, {{ username }}
+            </v-col>
+            <v-col align="right">
+              <v-btn @click="getRooms" color="primary">Refresh Room</v-btn>
+            </v-col>
+          </v-row>
+        </v-card-title>
         <v-row>
-          <v-col></v-col>
+          <v-col v-for="room in updateRooms" :key="room.name" align="center">
+            <Room :title="room.name" :color="room.type" :deletable="false"/>
+          </v-col>
+<!--          <v-col></v-col>
           <v-col align="center">
             <Room :title="'Allgemein'" :color="'primary'" :deletable="false"/>
           </v-col>
           <v-col align="center">
             <Room :title="'WebEng'" :color="'fhnw'" :deletable="true"/>
           </v-col>
-          <v-col></v-col>
+          <v-col></v-col>-->
         </v-row>
       </v-card-text>
     </v-card>
@@ -25,15 +37,24 @@ export default {
 name: "Dashboard",
   components: {Room},
   data: () => ({
-
+    rooms: []
   }),
-  mounted() {
-
+  created() {
+    this.getRooms()
+  },
+  methods: {
+   getRooms () {
+     this.$store.dispatch('ROOMS')
+   }
   },
   computed: {
     username () {
       console.log(this.$store.getters.getUsername)
       return this.$store.getters.getUsername
+    },
+    updateRooms() {
+      console.log(this.$store.getters.getRooms)
+      return this.$store.getters.getRooms
     }
   }
 }
