@@ -8,22 +8,14 @@
               Hallo, {{ username }}
             </v-col>
             <v-col align="right">
-              <v-btn @click="getRooms" color="primary">Refresh Room</v-btn>
+              <v-btn @click="getRooms" color="primary">Refresh Rooms</v-btn>
             </v-col>
           </v-row>
         </v-card-title>
         <v-row>
           <v-col v-for="room in updateRooms" :key="room.name" align="center">
-            <Room :title="room.name" :color="room.type" :deletable="false"/>
+            <Room :title="room.name" :color="room.type" :deletable="false" :id="room._id"/>
           </v-col>
-<!--          <v-col></v-col>
-          <v-col align="center">
-            <Room :title="'Allgemein'" :color="'primary'" :deletable="false"/>
-          </v-col>
-          <v-col align="center">
-            <Room :title="'WebEng'" :color="'fhnw'" :deletable="true"/>
-          </v-col>
-          <v-col></v-col>-->
         </v-row>
       </v-card-text>
     </v-card>
