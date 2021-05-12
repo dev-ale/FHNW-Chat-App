@@ -37,3 +37,104 @@ app.get(/.*/, function (req, res) {
 const port = process.env.PORT || 5000;
 app.listen(port)
 console.log(`App is listening on port: ${port}`)
+
+
+//socket.io Server
+const http = require("http").Server(app);
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "http://localhost:5000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Access-Control-Allow-Credentials"],
+    credentials: true,
+  },
+});
+
+var rooms = ['English', 'Java', 'WebEngineering'];
+var room_users = {
+  English: [],
+  Java: [],
+  WebEngineering: [],
+};
+var room_messages = {
+  English: [],
+  Java: [],
+  WebEngineering: [],
+};
+
+var index = 0;
+
+io.on("connection", (socket) => {
+    console.log("socket.io running")
+  //Join to Roomchat
+  socket.on("joinRoom", ({ username, room }) => {
+    socket.room = room;
+    socket.username = username;
+
+    //room_users[socket.room].push(username);
+
+    socket.join(socket.room);
+
+    console.log(`${socket.username} has connected to room ${socket.room}`);
+
+    io.to(socket.room).emit("userOnline", socket.username);
+
+    //Welcome User in Chat
+    socket.to(socket.room).emit("chat_update", {
+      username: socket.username,
+      message: `Wilkommen im Chat ${socket.room}`,
+    });
+
+    //Passing Data from Database
+   /*  io.to(socket.room).emit("db_data", {
+      users: room_users[socket.room].map((s) => s.username),
+      rooms,
+      current_room: socket.room,
+      messages: room_messages[socket.room],
+    }); */
+
+    //Update Users in the Chat that a new User is online
+    socket.broadcast.to(socket.room).emit("update_newUser", {
+      username: socket.username,
+      message: `${socket.username} ist dem Chat beigetreten.`,
+    });
+
+    socket.on("message", (msg) => {
+      let message = {
+        index: index,
+        username: socket.username,
+        msg: msg,
+        time: new Date().toLocaleTimeString(),
+      };
+
+      //room_messages[socket.room].push(message);
+
+      console.log(message);
+
+      io.to(socket.room).emit("message", message);
+
+      index++;
+    });
+
+    // User disconected
+    socket.on("disconnect", () => {
+      console.log(`${socket.username} hat den Chat verlassen.`);
+      io.emit("userLeft", socket.username);
+      //room_users[socket.room].splice(room_users[socket.room].indexOf(socket), 1);
+    });
+  });
+
+  //Get rooms TBD
+    
+    socket.emit('allRooms', {
+      rooms,
+    });
+  
+ 
+});
+
+//const portSocket = process.env.PORT || 3000;
+
+ http.listen(3000, () => {
+  console.log(`socket Listening on port 3000`);
+}); 

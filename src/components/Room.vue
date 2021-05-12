@@ -46,21 +46,30 @@ name: "Room",
   data() {
     return {
       hover: false,
+      
     };
   },
   props: {
     title: String,
     color: String,
     deletable: Boolean,
-    id: String
+    id: String,
+    username: String,
   },
   methods: {
     joinRoom() {
       console.log('trying to join room ' + this.id);
+      this.$socket.emit("joinRoom", {username: this.username, room: this.id})
+      this.$router.push('/chat');
+
     },
     deleteRoom() {
       console.log('trying to delete room ' + this.id);
     }
+  },
+  computed: {
+    
+    
   }
 }
 </script>

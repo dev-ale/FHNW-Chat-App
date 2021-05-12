@@ -5,6 +5,7 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import socket from './socket/index'
 
 
 
@@ -14,6 +15,9 @@ if (token) {
 }
 
 Vue.config.productionTip = false
+
+//Global variable for socket
+Vue.prototype.$socket = socket
 
 new Vue({
   router,

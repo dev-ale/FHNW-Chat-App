@@ -6,6 +6,8 @@ import Dashboard from "@/views/Dashboard";
 import About from "@/views/About";
 import Login from "@/components/Login";
 import Register from "@/components/Register";
+import Chat from "@/views/Chat";
+
 
 
 Vue.use(VueRouter)
@@ -55,7 +57,14 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
     beforeEnter: ifAuthenticated,
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
+    beforeEnter: ifAuthenticated,
   }
+
 ]
 
 const router = new VueRouter({
