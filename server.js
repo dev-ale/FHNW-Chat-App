@@ -35,20 +35,14 @@ app.get(/.*/, function (req, res) {
 })
 
 const port = process.env.PORT || 5000;
-app.listen(port)
-console.log(`App is listening on port: ${port}`)
 
+const SocketIO = require("socket.io")
 
-//socket.io Server
-const http = require("http").Server(app);
-const io = require("socket.io")(http, {
-  cors: {
-    origin: "http://localhost:5000",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Access-Control-Allow-Credentials"],
-    credentials: true,
-  },
-});
+const server= app.listen(port, () => {
+    console.log(`socket Listening on port 5000`);
+  }); 
+  
+  var io = SocketIO(server)
 
 var rooms = ['English', 'Java', 'WebEngineering'];
 var room_users = {
@@ -103,11 +97,12 @@ io.on("connection", (socket) => {
       let message = {
         index: index,
         username: socket.username,
+        room: "rr",
         msg: msg,
         time: new Date().toLocaleTimeString(),
       };
 
-      //room_messages[socket.room].push(message);
+      room_messages[socket.room].push(message);
 
       console.log(message);
 
@@ -133,8 +128,3 @@ io.on("connection", (socket) => {
  
 });
 
-//const portSocket = process.env.PORT || 3000;
-
- http.listen(3000, () => {
-  console.log(`socket Listening on port 3000`);
-}); 
