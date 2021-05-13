@@ -20,8 +20,7 @@
                           </v-col>
                           <v-col cols="12">
                             <sub class="ml-2" style="font-size: 0.5rem;">
-                              <b>{{ message.username }}</b> | {{ message.date }}</sub
-                            >
+                              <b>{{ message.username }}</b> | {{ message.date }}</sub>
                           </v-col>
                         </v-row>
                       </v-chip>
@@ -58,6 +57,7 @@ export default {
       this.$socket.emit("joinRoom", this.roomAndUser);
       this.$socket.on("db_data", (data) => {
         this.messages = data.messages.filter((e) => e.roomId === this.roomAndUser.room);
+        console.log("joinRoom Socket")
       });
 
       this.listen();
@@ -69,6 +69,8 @@ export default {
 
       this.$socket.on("message", (msg) => {
         this.messages.push(msg);
+                console.log("message Socket")
+
       });
     },
 
