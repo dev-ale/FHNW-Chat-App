@@ -95,12 +95,10 @@ io.on("connection", (socket) => {
         date: today.getDate()+'.'+today.getMonth()+'.'+today.getFullYear()+': '+today.toLocaleTimeString()
       })
       // Save Message to Database
-       message.save((err, result) => {
+        message.save((err, result) => {
         if(err) throw err;
         messages.push(result)
-      })  
-
-
+      })   
       console.log(message);
 
       io.to(socket.room).emit("message", message);
