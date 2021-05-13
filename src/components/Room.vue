@@ -58,8 +58,7 @@ name: "Room",
   },
   methods: {
     joinRoom() {
-      console.log('trying to join room ' + this.id);
-      this.$socket.emit("joinRoom", {username: this.username, room: this.id})
+      this.$store.commit('SET_CURRENTROOM', this.id)
       this.$router.push('/chat');
 
     },

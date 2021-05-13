@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card height="700">
+    <v-card height="600">
       <v-card-text>
         <v-card-title>
           <v-row>
@@ -15,7 +15,6 @@
         <v-row>
           <v-col v-for="room in updateRooms" :key="room.name" align="center">
             <Room :title="room.name" :color="room.type" :deletable="false" :id="room._id" :username="username"/>
-            <div v-for="roomsocket in roomsSocket" :key="roomsocket">{{roomsocket}}</div>
           </v-col>
         </v-row>
       </v-card-text>
@@ -31,7 +30,6 @@ name: "Dashboard",
   components: {Room},
   data: () => ({
     rooms: [],
-    roomsSocket: []
   }),
   created() {
     this.getRooms()
@@ -40,13 +38,10 @@ name: "Dashboard",
    getRooms () {
      this.$store.dispatch('ROOMS')
    },
-      getRoomsSocket() {
-      this.$socket.on("allRooms", (data) => {
-       this.roomsSocket = data.rooms
-       console.log(this.roomsSocket)
-        })
+      
+        
        
-    },
+    
   },
   computed: {
     username () {
@@ -57,12 +52,13 @@ name: "Dashboard",
       //console.log(this.$store.getters.getRooms)
       return this.$store.getters.getRooms
     },
+    reloadPage() {
+      window.location.reload()
+    }
  
     
   },
   mounted: function() {
-    this.getRoomsSocket()
-    console.log("hallo")
   },
 }
 </script>

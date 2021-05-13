@@ -6,13 +6,16 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import socket from './socket/index'
-
+import VueChatScroll from 'vue-chat-scroll'
 
 
 const token = localStorage.getItem('auth-token')
 if (token) {
   axios.defaults.headers.common['auth-token'] = token
 }
+
+Vue.use(VueChatScroll)
+
 
 Vue.config.productionTip = false
 
