@@ -6,6 +6,17 @@
           <v-card flat class="d-flex flex-column fill-height">
             <v-card-title>
               {{ room_data[0].name }}
+              <v-spacer></v-spacer>
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on">Users Online</v-btn>
+                </template>
+                <v-list>
+                  <v-list-item v-for="user in users" :key="user">
+                    <v-list-item-title>{{ user }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-card-title>
             <v-divider class="mx-4"></v-divider>
             <v-card-text class="flex-grow-1 overflow-y-auto scrollbar" v-chat-scroll="{ always: false, smooth: true }">
@@ -15,14 +26,17 @@
                     <template v-slot:activator="{ on }">
                       <v-chip :color="message.username === roomAndUser.username ? 'primary' : ''" dark style="height:auto;white-space: normal;" class="pa-4 mb-2" v-on="on">
                         <v-row no-gutters>
+                          <v-col cols="12">{{ message.msg }}</v-col>
                           <v-col cols="12">
-                            {{ message.msg }}
-                          </v-col>
-                          <v-col cols="12">
-                            <sub class="ml-2" style="font-size: 0.5rem;">
-                              <b>{{ message.username }}</b> | {{ message.date }}</sub>
+                            <sub class="ml-2" style="font-size: 0.6rem;">
+                              <b>{{ message.username }}</b>
+                              | {{ message.date }}
+                            </sub>
                           </v-col>
                         </v-row>
+                      </v-chip>
+                      <v-chip v-for="updatemsg in updateMessages" :key="updatemsg">
+                        {{updatemsg}}
                       </v-chip>
                     </template>
                   </v-menu>
@@ -43,38 +57,44 @@
 export default {
   name: "Home",
   components: {},
-  data: function() {
+  data: function () {
     return {
       messages: [],
       users: [],
       msg: "",
       roomAndUser: { username: "", room: "" },
       room_data: null,
+      updateMessages: []
     };
   },
   methods: {
-    joinRoom: function() {
+    joinRoom: function () {
       this.$socket.emit("joinRoom", this.roomAndUser);
       this.$socket.on("db_data", (data) => {
-        this.messages = data.messages.filter((e) => e.roomId === this.roomAndUser.room);
-        console.log("joinRoom Socket")
+        this.messages = data.messages.filter(
+          (e) => e.roomId === this.roomAndUser.room
+        );
       });
 
       this.listen();
     },
-    listen: function() {
-      /*  this.$socket.on("userLeft", (user) => {
+    listen: function () {
+      this.$socket.on("userLeft", (user) => {
         this.users.splice(this.users.indexOf(user), 1);
-      }); */
+      });
+
+      this.$socket.on("userOnline", (user) => {
+        this.users.push(user);
+      });
 
       this.$socket.on("message", (msg) => {
         this.messages.push(msg);
-                console.log("message Socket")
-
+        console.log(msg)
       });
-    },
 
-    sendMessage: function() {
+      },
+
+    sendMessage: function () {
       /* Check if String is empty or only contains spaces
        https://stackoverflow.com/questions/10261986/how-to-detect-string-which-contains-only-spaces/50971250 */
       if (!this.msg || !this.msg.replace(/\s/g, "").length) {
@@ -87,8 +107,10 @@ export default {
     dispatchRooms() {
       this.$store.dispatch("ROOMS");
     },
-    getRoomData: function() {
-      this.room_data = this.getRooms.filter((e) => e._id === this.roomAndUser.room);
+    getRoomData: function () {
+      this.room_data = this.getRooms.filter(
+        (e) => e._id === this.roomAndUser.room
+      );
     },
   },
   created() {
@@ -100,19 +122,19 @@ export default {
     },
   },
 
-  mounted: function() {
+  mounted: function () {
     this.roomAndUser.username = this.$store.state.username;
     this.roomAndUser.room = this.$store.state.current_room;
     this.getRoomData();
     this.joinRoom();
-    console.log(this.room_data);
   },
   watch: {},
 };
 </script>
 
 <style scoped>
-/* https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
+/* Hide scrollbar
+https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
 .scrollbar::-webkit-scrollbar {
   display: none;
 }

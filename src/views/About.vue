@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <v-card height="700">
+    <v-card height="600">
       <v-card-text>
         <v-card-title>
-          <v-spacer></v-spacer>about
+          <v-spacer></v-spacer>
         <v-spacer></v-spacer></v-card-title>
         <v-row>
           <v-col>
@@ -13,10 +13,12 @@
               <v-list-item>Node.js(Express) - Backend</v-list-item>
               <v-list-item>MongoDB Atlas - Datenbank</v-list-item>
               <v-list-item>Heroku - Deployment</v-list-item>
+              <v-list-item>Socket.io - Server Echtzeitchat</v-list-item>
+
             </v-list>
           </v-col>
           <v-col>
-            <h2>Funktionen</h2>
+            <h2>Features</h2>
             <v-list>
               <v-list-item>Registrieren</v-list-item>
               <v-list-item>Einloggen</v-list-item>
@@ -24,25 +26,12 @@
               <v-list-item>Passwort Encryption</v-list-item>
               <v-list-item>Protected Routes</v-list-item>
               <v-list-item>HTTPS & REST API Requests</v-list-item>
+              <v-list-item>Cloud Application Heroku</v-list-item>
+
 
             </v-list>
           </v-col>
-        </v-row>
-        <v-row>
-          <v-col align="center">
-            <h2>example room ui</h2>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col></v-col>
-          <v-col align="center">
-            <Room :title="'Allgemein'" :color="'primary'" :deletable="false"/>
-          </v-col>
-          <v-col align="center">
-            <Room :title="'WebEng'" :color="'fhnw'" :deletable="true"/>
-          </v-col>
-          <v-col></v-col>
-        </v-row>
+        </v-row> 
       </v-card-text>
     </v-card>
   </v-container>

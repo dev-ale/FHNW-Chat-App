@@ -61,19 +61,22 @@ io.on("connection", (socket) => {
     socket.username = username;
     console.log(socket.room)
     
-    //room_users[room].push(username);
-
     socket.join(socket.room);
 
     console.log(`${socket.username} has connected to room ${socket.room}`);
 
-    //io.to(socket.room).emit("userOnline", socket.username);
+/*     socket.broadcast.emit("userOnline", socket.username);
+ */    
+    io.to(socket.room).emit("userOnline", socket.username);
 
     //Welcome User in Chat
-    socket.to(socket.room).emit("chat_update", {
+    /* socket.to(socket.room).emit("chat_update", {
+     
       username: socket.username,
-      message: `Wilkommen im Chat ${socket.room}`,
-    });
+      msg: `Wilkommen im Chat ${socket.room}`,
+      roomId: socket.room,
+      date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString()
+    }); */
 
     //Passing Data from Database
     io.to(socket.room).emit("db_data", {
@@ -84,7 +87,9 @@ io.on("connection", (socket) => {
     socket.broadcast.to(socket.room).emit("update_newUser", {
       username: socket.username,
       message: `${socket.username} ist dem Chat beigetreten.`,
-    });
+    }); 
+
+   
 
     socket.on("message", (msg) => {
       let today = new Date()
@@ -109,8 +114,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
       socket.leave(socket.room)
       console.log(`${socket.username} hat den Chat verlassen.`);
-      //io.emit("userLeft", socket.username);
-      //room_users[socket.room].splice(room_users[socket.room].indexOf(socket), 1);
+      io.emit("userLeft", socket.username);
     });
   });
 });
