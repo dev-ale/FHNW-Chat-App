@@ -35,9 +35,7 @@
                           </v-col>
                         </v-row>
                       </v-chip>
-                      <v-chip v-for="updatemsg in updateMessages" :key="updatemsg">
-                        {{updatemsg}}
-                      </v-chip>
+                      <v-chip v-for="updatemsg in updateMessages" :key="updatemsg">{{updatemsg}}</v-chip>
                     </template>
                   </v-menu>
                 </div>
@@ -64,7 +62,7 @@ export default {
       msg: "",
       roomAndUser: { username: "", room: "" },
       room_data: null,
-      updateMessages: []
+      updateMessages: [],
     };
   },
   methods: {
@@ -89,10 +87,9 @@ export default {
 
       this.$socket.on("message", (msg) => {
         this.messages.push(msg);
-        console.log(msg)
+        console.log(msg);
       });
-
-      },
+    },
 
     sendMessage: function () {
       /* Check if String is empty or only contains spaces
