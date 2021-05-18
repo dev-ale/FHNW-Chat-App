@@ -19,7 +19,7 @@
               </v-menu>
             </v-card-title>
             <v-divider class="mx-4"></v-divider>
-            <v-card-text class="flex-grow-1 overflow-y-auto scrollbar" v-chat-scroll="{ always: false, smooth: true }">
+            <v-card-text class="flex-grow-1 overflow-y-auto scrollbar" v-chat-scroll="{ always: true, smooth: true }">
               <template v-for="message in messages">
                 <div v-bind:key="message.index" :class="{ 'd-flex flex-row-reverse': message.username === roomAndUser.username }">
                   <v-menu offset-y>
