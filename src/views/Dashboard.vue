@@ -15,7 +15,7 @@
         </v-card-title>
         <v-row>
           <v-col v-for="room in updateRooms" :key="room.name" align="center">
-            <Room :title="room.name" :color="room.type" :deletable="deletable" :id="room._id" :username="username" :role="role" :creator="room.creator"/>
+            <Room @delete-room="deleteRoom" :title="room.name" :color="room.type" :deletable="deletable" :id="room._id" :username="username" :role="role" :creator="room.creator"/>
           </v-col>
         </v-row>
       </v-card-text>
@@ -55,6 +55,12 @@ name: "Dashboard",
     this.getRooms()
   },
   methods: {
+    deleteRoom (roomId) {
+      console.log('function called')
+      this.$store.dispatch('DELETE_ROOM', roomId).then(() => {
+        this.getRooms();
+      })
+    },
     addRoom (chatName, type, creator) {
       this.name = chatName;
       this.type = type;

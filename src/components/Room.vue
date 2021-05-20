@@ -67,6 +67,7 @@ name: "Room",
 
     },
     deleteRoom() {
+      this.$emit("delete-room",this.id);
       console.log('trying to delete room ' + this.id);
     }
   },

@@ -38,4 +38,23 @@ router.post('/create', async (req, res) => {
     }
 });
 
+// DELETE ROOM
+router.delete('/delete/:id', async (req, res) => {
+    console.log('delete room called');
+
+    //check if room with ID exists in DB
+    const roomExist = await Room.findOne({_id: req.params.id});
+    if (!roomExist) {
+        return res.status(400).send('Room does not exist');
+    }else {
+        try{
+            const deletedRoom = await Room.deleteOne( { _id: req.params.id } );
+            res.send('room: ' + req.params.id + ' removed');
+        }catch(err){
+            res.status(400).send(err);
+        }
+    }
+
+});
+
 module.exports = router;

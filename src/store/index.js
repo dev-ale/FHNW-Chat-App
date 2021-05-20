@@ -116,7 +116,22 @@ export default new Vuex.Store({
         axios({ url: "api/dashboard/create", data: room, method: "POST" })
             .then((resp) => {
               resolve(resp);
-              console.log(resp);
+              console.log(resp.data);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+      });
+    },
+    DELETE_ROOM: ({ commit, dispatch }, roomId) => {
+      return new Promise((resolve, reject) => {
+        // The Promise used for router redirect in login
+        commit("DELETE_ROOM");
+
+        axios({ url: "api/dashboard/delete/" + roomId,  method: "DELETE" })
+            .then((resp) => {
+              resolve(resp);
+              console.log(resp.data);
             })
             .catch((err) => {
               reject(err);
