@@ -6,9 +6,6 @@
     <v-card-text>
       <v-container>
         <v-row>
-
-
-
           <v-col cols="12">
             <v-text-field
                 v-model="chatName"
