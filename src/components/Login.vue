@@ -29,6 +29,13 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+        <v-row>
+          <v-col align="center">
+            <v-btn to="/" icon dark outlined class="mt-5">
+              <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-flex>
     </v-layout>
   </v-container>
