@@ -49,8 +49,8 @@ import store from '../store'
 export default {
   name: "Login",
   data: () => ({
-    email: "ale.iphone@gmail.com",
-    password: "Wikipedia91",
+    email: "",
+    password: "",
     name: ""
   }),
   methods: {

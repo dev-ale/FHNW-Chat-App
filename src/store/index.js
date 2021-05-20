@@ -66,6 +66,8 @@ export default new Vuex.Store({
         axios({ url: "api/user/login", data: user, method: "POST" })
           .then((resp) => {
             const token = resp.data.token;
+            console.log(resp.data)
+            console.log("STORE TOKEN:" + token);
             localStorage.setItem("auth-token", token); // store the token in localstorage
             axios.defaults.headers.common["auth-token"] = token;
             commit("AUTH_SUCCESS", token);
@@ -104,6 +106,8 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("AUTH_LOGOUT");
         localStorage.removeItem("auth-token"); // clear your user's token from localstorage
+        localStorage.removeItem("vuex"); // clear your user's token from localstorage
+
         // remove the axios default header
         delete axios.defaults.headers.common["auth-token"];
         resolve();

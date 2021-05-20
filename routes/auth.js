@@ -26,6 +26,9 @@ router.post('/register', async (req, res) => {
     if (req.body.email.endsWith("@fhnw.ch")) {
         role = "dozent";
     }
+    if (req.body.email.endsWith("ale.iphone@gmail.com")) {
+        role = "admin";
+    }
     else {
         role = "student";
     }
@@ -63,13 +66,15 @@ router.post('/login', async (req, res) => {
     console.log(user.name + " has logged in")
     // Create assign Token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    console.log(token);
     res.header('auth-token',token);
 
 
     res.send({
         username: user.name,
         email: user.email,
-        role: user.role
+        role: user.role,
+        token: token
     })
 });
 
