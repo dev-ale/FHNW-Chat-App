@@ -3,7 +3,7 @@ const verify = require('../verifyToken');
 const Room = require('../model/Room');
 const {roomValidation} = require('../validation');
 
-router.get('/', async (req,res) => {
+router.get('/', verify, async (req,res) => {
     Room.collection.find().toArray().then(results => {
         console.log('get rooms called')
         console.log(results)
@@ -13,7 +13,7 @@ router.get('/', async (req,res) => {
 });
 
 // ADD ROOM
-router.post('/create', async (req, res) => {
+router.post('/create', verify, async (req, res) => {
     console.log('create room called')
     // Validate Data before creating new room
     const { error } = roomValidation(req.body);
@@ -39,7 +39,7 @@ router.post('/create', async (req, res) => {
 });
 
 // DELETE ROOM
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', verify, async (req, res) => {
     console.log('delete room called');
 
     //check if room with ID exists in DB
