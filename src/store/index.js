@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem("auth-token") || "",
     status: "",
-    username: "user",
+    username: "",
+    role: "",
     rooms: [],
     current_room: "",
   },
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     isAuthenticated: (state) => !!state.token,
     authStatus: (state) => state.status,
     getUsername: (state) => state.username,
+    getRole: (state) => state.role,
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
   },
@@ -32,6 +34,9 @@ export default new Vuex.Store({
     },
     SET_USERNAME: (state, username) => {
       state.username = username;
+    },
+    SET_ROLE: (state, role) => {
+      state.role = role;
     },
     SET_ROOMS: (state, rooms) => {
       state.rooms = rooms;
@@ -68,6 +73,8 @@ export default new Vuex.Store({
             dispatch("USER_REQUEST");
             const username = resp.data.username;
             commit("SET_USERNAME", username);
+            const role = resp.data.role;
+            commit("SET_ROLE", role);
             resolve(resp);
           })
           .catch((err) => {

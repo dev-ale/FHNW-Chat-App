@@ -5,7 +5,7 @@
         <v-card-title>
           <v-row>
             <v-col>
-              Hallo, {{ username }}
+              Hallo, {{ username }} <v-chip small>{{ role }}</v-chip>
             </v-col>
             <v-col align="right">
               <v-btn @click="getRooms" color="primary">Refresh Rooms</v-btn>
@@ -38,15 +38,19 @@ name: "Dashboard",
    getRooms () {
      this.$store.dispatch('ROOMS')
    },
-      
-        
-       
-    
+
+
+
+
   },
   computed: {
     username () {
      // console.log(this.$store.getters.getUsername)
       return this.$store.getters.getUsername
+    },
+    role () {
+      console.log(this.$store.getters.getUsername)
+      return this.$store.getters.getRole
     },
     updateRooms() {
       //console.log(this.$store.getters.getRooms)
@@ -55,8 +59,8 @@ name: "Dashboard",
     reloadPage() {
       window.location.reload()
     }
- 
-    
+
+
   },
   mounted: function() {
   },
