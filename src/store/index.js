@@ -112,10 +112,11 @@ export default new Vuex.Store({
     POST_ROOM: ({ commit, dispatch }, room) => {
       return new Promise((resolve, reject) => {
         // The Promise used for router redirect in login
-        //commit("POST_ROOM");
+        commit("POST_ROOM");
         axios({ url: "api/dashboard/create", data: room, method: "POST" })
             .then((resp) => {
               resolve(resp);
+              console.log(resp);
             })
             .catch((err) => {
               reject(err);

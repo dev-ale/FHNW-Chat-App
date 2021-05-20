@@ -47,18 +47,27 @@ name: "Dashboard",
     rooms: [],
     deletable: false,
     dialog: false,
+    name: false,
+    type: false,
+    creator: false
   }),
   created() {
     this.getRooms()
   },
   methods: {
-    addRoom (chatname, type, creator) {
-      const room = { chatname, type, creator }
-      this.$store.dispatch('POST_ROOM', room).then(() => {
-        //this.$router.push('/dashboard')
-      })
+    addRoom (chatName, type, creator) {
+      this.name = chatName;
+      this.type = type;
+      this.creator = creator;
+      this.postCall()
       this.closeModal();
       this.getRooms();
+    },
+    postCall() {
+      const { name, type, creator } = this
+      this.$store.dispatch('POST_ROOM', { name, type, creator }).then(() => {
+        this.getRooms();
+      })
     },
     closeModal () {
       this.dialog = false;
