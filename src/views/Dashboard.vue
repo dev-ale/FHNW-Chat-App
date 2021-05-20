@@ -54,7 +54,7 @@ name: "Dashboard",
   methods: {
     addRoom (chatname, type, creator) {
       const room = { chatname, type, creator }
-      this.$store.dispatch('AUTH_REGISTER', room).then(() => {
+      this.$store.dispatch('POST_ROOM', room).then(() => {
         //this.$router.push('/dashboard')
       })
       this.closeModal();
