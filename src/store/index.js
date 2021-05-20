@@ -109,6 +109,19 @@ export default new Vuex.Store({
         resolve();
       });
     },
+    POST_ROOM: ({ commit, dispatch }, room) => {
+      return new Promise((resolve, reject) => {
+        // The Promise used for router redirect in login
+        //commit("POST_ROOM");
+        axios({ url: "api/api/dashboard/create", data: room, method: "POST" })
+            .then((resp) => {
+              resolve(resp);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+      });
+    },
   },
   modules: {},
   plugins: [createPersistedState()],

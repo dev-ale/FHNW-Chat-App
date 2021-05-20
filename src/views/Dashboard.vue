@@ -53,8 +53,10 @@ name: "Dashboard",
   },
   methods: {
     addRoom (chatname, type, creator) {
-      console.log(chatname + type + creator)
-      //logic
+      const room = { chatname, type, creator }
+      this.$store.dispatch('AUTH_REGISTER', room).then(() => {
+        //this.$router.push('/dashboard')
+      })
       this.closeModal();
       this.getRooms();
     },
