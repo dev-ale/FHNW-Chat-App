@@ -66,8 +66,6 @@ export default new Vuex.Store({
         axios({ url: "api/user/login", data: user, method: "POST" })
           .then((resp) => {
             const token = resp.data.token;
-            console.log(resp.data)
-            console.log("STORE TOKEN:" + token);
             localStorage.setItem("auth-token", token); // store the token in localstorage
             axios.defaults.headers.common["auth-token"] = token;
             commit("AUTH_SUCCESS", token);
@@ -120,7 +118,6 @@ export default new Vuex.Store({
         axios({ url: "api/dashboard/create", data: room, method: "POST" })
             .then((resp) => {
               resolve(resp);
-              console.log(resp.data);
             })
             .catch((err) => {
               reject(err);
@@ -135,7 +132,6 @@ export default new Vuex.Store({
         axios({ url: "api/dashboard/delete/" + roomId,  method: "DELETE" })
             .then((resp) => {
               resolve(resp);
-              console.log(resp.data);
             })
             .catch((err) => {
               reject(err);

@@ -96,9 +96,7 @@ export default {
       };
       axios.post("/api/user/register", data)
           .then((response) => {
-            console.log("Registered User")
             this.login()
-            console.log(response)
             router.push("/dashboard")
           })
           .catch((errors) => {

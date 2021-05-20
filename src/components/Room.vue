@@ -34,11 +34,8 @@
               <v-btn x-small @click="dialog = true" v-if="deletable" class="ml-2" outlined color="red">Delete</v-btn>
               <v-btn x-small @click="dialog = true" v-if="creator == username && role == 'dozent'" class="ml-2" outlined color="red">Delete</v-btn>
             </v-col>
-
-
           </v-row>
         </v-container>
-
       </v-col>
     </v-row>
 
@@ -82,7 +79,6 @@ name: "Room",
     return {
       hover: false,
       dialog: false
-
     };
   },
   props: {

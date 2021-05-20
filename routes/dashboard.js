@@ -5,8 +5,6 @@ const {roomValidation} = require('../validation');
 
 router.get('/', verify, async (req,res) => {
     Room.collection.find().toArray().then(results => {
-        console.log('get rooms called')
-        console.log(results)
         res.send(results);
     })
         .catch()
@@ -14,7 +12,6 @@ router.get('/', verify, async (req,res) => {
 
 // ADD ROOM
 router.post('/create', verify, async (req, res) => {
-    console.log('create room called')
     // Validate Data before creating new room
     const { error } = roomValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -40,8 +37,6 @@ router.post('/create', verify, async (req, res) => {
 
 // DELETE ROOM
 router.delete('/delete/:id', verify, async (req, res) => {
-    console.log('delete room called');
-
     //check if room with ID exists in DB
     const roomExist = await Room.findOne({_id: req.params.id});
     if (!roomExist) {

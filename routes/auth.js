@@ -9,7 +9,6 @@ const {registerValidation, loginValidation } = require('../validation');
 
 // REGISTER
 router.post('/register', async (req, res) => {
-    console.log('route/register called')
     // Validate Data before creating new user
     const { error } = registerValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -24,10 +23,11 @@ router.post('/register', async (req, res) => {
 
     //define User role based on email
     let role;
-    if (req.body.email.endsWith("@fhnw.ch")) {
+    const mail = req.body.email;
+    if (mail.endsWith("@fhnw.ch")) {
         role = "dozent";
     }
-    if (req.body.email.endsWith("ale.iphone@gmail.com")) {
+    else if (mail.endsWith("ale.iphone@gmail.com")) {
         role = "admin";
     }
     else {
@@ -51,7 +51,6 @@ router.post('/register', async (req, res) => {
 
 //LOGIN
 router.post('/login', async (req, res) => {
-    console.log('route/login called');
     // Validate Data before login in user
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -64,10 +63,8 @@ router.post('/login', async (req, res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass) return res.status(400).send('Invalid password');
 
-    console.log(user.name + " has logged in")
     // Create assign Token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    console.log(token);
     res.header('auth-token',token);
 
 

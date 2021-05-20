@@ -33,11 +33,7 @@
     >
       <NewRoom :creator="username" @close="closeModal" @add-room="addRoom"/>
     </v-dialog>
-
   </v-container>
-
-
-
 </template>
 
 <script>
@@ -61,7 +57,6 @@ name: "Dashboard",
   },
   methods: {
     deleteRoom (roomId) {
-      console.log('function called')
       this.$store.dispatch('DELETE_ROOM', roomId).then(() => {
         this.getRooms();
       })
@@ -89,18 +84,15 @@ name: "Dashboard",
   },
   computed: {
     username () {
-     // console.log(this.$store.getters.getUsername)
       return this.$store.getters.getUsername
     },
     role () {
-      //console.log(this.$store.getters.getUsername)
       if (this.$store.getters.getRole == 'admin') {
         this.deletable = true;
       }
       return this.$store.getters.getRole
     },
     updateRooms() {
-      console.log(this.$store.getters.getRooms)
       return this.$store.getters.getRooms
     },
     reloadPage() {

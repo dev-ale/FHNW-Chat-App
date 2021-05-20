@@ -61,24 +61,6 @@ export default {
         this.$router.push('/dashboard')
       })
     }
-    /*login() {
-      let data = {
-        email: this.email,
-        password: this.password
-      };
-      axios.post("/api/user/login", data)
-          .then((response) => {
-            console.log(response.data)
-            console.log(response)
-            this.username = response.data["name"]
-            const authtoken = response.headers["auth-token"];
-            router.push("/dashboard")
-          })
-          .catch((errors) => {
-            console.log("Cannot log in")
-            console.log(errors)
-          })
-    }*/
   }
 }
 </script>
