@@ -5,16 +5,17 @@
         <v-card-title>
           <v-row>
             <v-col>
-              Hallo, {{ username }} <v-chip small>{{ role }}</v-chip>
+              Hallo, {{ username }} ({{ role }})
             </v-col>
             <v-col align="right">
-              <v-btn @click="getRooms" color="primary">Refresh Rooms</v-btn>
+              <v-btn v-if="role == 'admin' || role == 'dozent'" class="mr-5" color="primary">Add New Room</v-btn>
+              <v-btn icon @click="getRooms" color="primary"><v-icon>mdi-refresh</v-icon></v-btn>
             </v-col>
           </v-row>
         </v-card-title>
         <v-row>
           <v-col v-for="room in updateRooms" :key="room.name" align="center">
-            <Room :title="room.name" :color="room.type" :deletable="false" :id="room._id" :username="username"/>
+            <Room :title="room.name" :color="room.type" :deletable="deletable" :id="room._id" :username="username" :role="role" :creator="room.creator"/>
           </v-col>
         </v-row>
       </v-card-text>
@@ -30,6 +31,7 @@ name: "Dashboard",
   components: {Room},
   data: () => ({
     rooms: [],
+    deletable: false
   }),
   created() {
     this.getRooms()
@@ -49,11 +51,14 @@ name: "Dashboard",
       return this.$store.getters.getUsername
     },
     role () {
-      console.log(this.$store.getters.getUsername)
+      //console.log(this.$store.getters.getUsername)
+      if (this.$store.getters.getRole == 'admin') {
+        this.deletable = true;
+      }
       return this.$store.getters.getRole
     },
     updateRooms() {
-      //console.log(this.$store.getters.getRooms)
+      console.log(this.$store.getters.getRooms)
       return this.$store.getters.getRooms
     },
     reloadPage() {

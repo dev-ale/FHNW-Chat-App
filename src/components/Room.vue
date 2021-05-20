@@ -27,13 +27,16 @@
           <span v-if="color === 'fhnw'" class="black--text headline">{{ title }}</span>
         </v-avatar>
         <br>
+        <p class="caption">{{ creator }}</p>
+        <br>
         <v-container>
           <v-row justify="center" align-items="flex-end" align="center">
-            <v-btn @click="joinRoom" class="mt-3" outlined x-small color="primary">Join</v-btn>
+            <v-btn x-small @click="joinRoom" class="mt-3" outlined  color="primary">Join</v-btn>
             <v-btn x-small @click="deleteRoom" v-if="deletable" class="mt-1" outlined color="red">Delete</v-btn>
+            <v-btn x-small @click="deleteRoom" v-if="creator == username && role == 'dozent'" class="mt-1" outlined color="red">Delete</v-btn>
+
           </v-row>
         </v-container>
-
 
       </v-col>
     </v-row>
@@ -46,7 +49,7 @@ name: "Room",
   data() {
     return {
       hover: false,
-      
+
     };
   },
   props: {
@@ -55,6 +58,8 @@ name: "Room",
     deletable: Boolean,
     id: String,
     username: String,
+    creator: String,
+    role: String
   },
   methods: {
     joinRoom() {
@@ -67,8 +72,8 @@ name: "Room",
     }
   },
   computed: {
-    
-    
+
+
   }
 }
 </script>
