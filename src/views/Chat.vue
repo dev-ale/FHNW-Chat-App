@@ -78,11 +78,25 @@ export default {
     },
     listen: function () {
       this.$socket.on("userLeft", (user) => {
+        console.log(user + ' has left the chat');
+        this.messages.push({
+          date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString(),
+          msg: user + ' has left the chat',
+          roomId: this.roomAndUser.room,
+          username: "admin",
+        });
         this.users.splice(this.users.indexOf(user), 1);
       });
 
       this.$socket.on("userOnline", (user) => {
+        console.log(user + ' has joined the chat');
         this.users.push(user);
+        this.messages.push({
+          date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString(),
+          msg: user + ' has joined the chat',
+          roomId: this.roomAndUser.room,
+          username: "admin",
+        });
       });
 
       this.$socket.on("message", (msg) => {

@@ -55,9 +55,7 @@ export default {
             this.$router.go()
             this.$router.push('/login')
           })
-    }
-  },
-  methods: {
+    },
     notChat() {
       return this.$route.name === 'Chat'
     },
