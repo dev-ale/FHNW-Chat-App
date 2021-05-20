@@ -113,7 +113,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         // The Promise used for router redirect in login
         //commit("POST_ROOM");
-        axios({ url: "api/api/dashboard/create", data: room, method: "POST" })
+        axios({ url: "api/dashboard/create", data: room, method: "POST" })
             .then((resp) => {
               resolve(resp);
             })
