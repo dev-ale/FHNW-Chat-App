@@ -21,11 +21,21 @@ router.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
+    //define User role based on email
+    let role;
+    if (req.body.email.endsWith("@fhnw.ch")) {
+        role = "dozent";
+    }
+    else {
+        role = "student";
+    }
+
     // create new User
     const user = new User ({
         name: req.body.name,
         email: req.body.email,
-        password: hashPassword
+        password: hashPassword,
+        role: role
     });
     try{
         const savedUser = await user.save();
