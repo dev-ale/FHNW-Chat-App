@@ -61,7 +61,6 @@ name: "Dashboard",
       this.creator = creator;
       this.postCall()
       this.closeModal();
-      this.getRooms();
     },
     postCall() {
       const { name, type, creator } = this
