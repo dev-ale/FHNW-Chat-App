@@ -29,9 +29,12 @@
         <p class="caption mb-1">{{ creator }}</p>
         <v-container>
           <v-row justify="center" align-items="flex-end" align="center">
-            <v-btn x-small @click="joinRoom" class="mt-3" outlined  color="primary">Join</v-btn>
-            <v-btn x-small @click="dialog = true" v-if="deletable" class="mt-1" outlined color="red">Delete</v-btn>
-            <v-btn x-small @click="dialog = true" v-if="creator == username && role == 'dozent'" class="mt-1" outlined color="red">Delete</v-btn>
+            <v-col>
+              <v-btn x-small @click="joinRoom" outlined class="mr-2" color="primary">Join</v-btn>
+              <v-btn x-small @click="dialog = true" v-if="deletable" class="ml-2" outlined color="red">Delete</v-btn>
+              <v-btn x-small @click="dialog = true" v-if="creator == username && role == 'dozent'" class="ml-2" outlined color="red">Delete</v-btn>
+            </v-col>
+
 
           </v-row>
         </v-container>
@@ -45,8 +48,8 @@
     >
 
       <v-card>
-        <v-card-title class="headline grey lighten-2">
-          Raum {{ name }} löschen?
+        <v-card-title class="headline red lighten-2">
+          Raum löschen?
         </v-card-title>
         <v-divider></v-divider>
         <v-card-actions>

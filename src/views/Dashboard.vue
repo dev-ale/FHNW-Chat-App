@@ -18,6 +18,12 @@
             <Room @delete-room="deleteRoom" :title="room.name" :color="room.type" :deletable="deletable" :id="room._id" :username="username" :role="role" :creator="room.creator"/>
           </v-col>
         </v-row>
+        <v-row v-if="updateRooms.length < 1">
+          <v-col align="center">
+            <h3>no Chat-Rooms available yet</h3>
+
+          </v-col>
+        </v-row>
       </v-card-text>
     </v-card>
 
