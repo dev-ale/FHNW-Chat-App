@@ -26,9 +26,7 @@
           <span v-if="color !== 'fhnw'" class="white--text headline">{{ title }}</span>
           <span v-if="color === 'fhnw'" class="black--text headline">{{ title }}</span>
         </v-avatar>
-        <br>
-        <p class="caption">{{ creator }}</p>
-        <br>
+        <p class="caption mb-1">{{ creator }}</p>
         <v-container>
           <v-row justify="center" align-items="flex-end" align="center">
             <v-btn x-small @click="joinRoom" class="mt-3" outlined  color="primary">Join</v-btn>
@@ -62,6 +60,7 @@ name: "Room",
     role: String
   },
   methods: {
+
     joinRoom() {
       this.$store.commit('SET_CURRENTROOM', this.id)
       this.$router.push('/chat');

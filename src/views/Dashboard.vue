@@ -8,7 +8,7 @@
               Hallo, {{ username }} ({{ role }})
             </v-col>
             <v-col align="right">
-              <v-btn v-if="role == 'admin' || role == 'dozent'" class="mr-5" color="primary">Add New Room</v-btn>
+              <v-btn @click="dialog = true" v-if="role == 'admin' || role == 'dozent'" class="mr-5" color="primary">Add New Room</v-btn>
               <v-btn icon @click="getRooms" color="primary"><v-icon>mdi-refresh</v-icon></v-btn>
             </v-col>
           </v-row>
@@ -20,29 +20,50 @@
         </v-row>
       </v-card-text>
     </v-card>
+
+    <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="600px"
+    >
+      <NewRoom :creator="username" @close="closeModal" @add-room="addRoom"/>
+    </v-dialog>
+
   </v-container>
+
+
 
 </template>
 
 <script>
+
 import Room from "@/components/Room";
+import NewRoom from "@/components/NewRoom";
+
 export default {
 name: "Dashboard",
-  components: {Room},
+  components: {NewRoom, Room},
   data: () => ({
     rooms: [],
-    deletable: false
+    deletable: false,
+    dialog: false,
   }),
   created() {
     this.getRooms()
   },
   methods: {
+    addRoom (chatname, type, creator) {
+      console.log(chatname + type + creator)
+      //logic
+      this.closeModal();
+      this.getRooms();
+    },
+    closeModal () {
+      this.dialog = false;
+    },
    getRooms () {
      this.$store.dispatch('ROOMS')
    },
-
-
-
 
   },
   computed: {
