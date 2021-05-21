@@ -12,7 +12,9 @@ export default new Vuex.Store({
     role: "",
     rooms: [],
     current_room: "",
-    usersOnline: []
+    usersOnline: [],
+    error_message: "",
+    updateMessages: []
   },
   getters: {
     isAuthenticated: (state) => !!state.token,
@@ -21,7 +23,9 @@ export default new Vuex.Store({
     getRole: (state) => state.role,
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
-    getUsersOnline: (state) => state.usersOnline
+    getUsersOnline: (state) => state.usersOnline,
+    getErrorMessage: (state) => state.error_message,
+    getupdateMessages:(state) => state.updateMessages,
   },
   mutations: {
     AUTH_REQUEST: (state) => {
@@ -51,6 +55,12 @@ export default new Vuex.Store({
     },
     REMOVE_USERSONLINE: (state, user) => {
       state.usersOnline.splice(user,1);
+    },
+    SET_ERRORMESSAGE: (state, payload) => {
+        state.error_message = payload;
+    },
+    SET_UPDATEMESSAGES: (state, payload) => {
+      state.updateMessages.push(payload)
     }
    
   },
@@ -88,6 +98,7 @@ export default new Vuex.Store({
           })
           .catch((err) => {
             commit("AUTH_ERROR", err);
+            commit("SET_ERRORMESSAGE", err.response.data);
             localStorage.removeItem("auth-token"); // if the request fails, remove any possible user token if possible
             reject(err);
           });
@@ -105,6 +116,7 @@ export default new Vuex.Store({
           })
           .catch((err) => {
             commit("AUTH_ERROR", err);
+            commit("SET_ERRORMESSAGE", err.response.data);
             reject(err);
           });
       });

@@ -29,6 +29,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
+            <p class="caption red--text">{{ errorMessage }}</p>
             <v-spacer></v-spacer>
             <v-btn @click="register" dark color="primary" >
               Registrieren
@@ -59,6 +60,14 @@ export default {
     password: "",
     name: ""
   }),
+  mounted() {
+    this.$store.commit("SET_ERRORMESSAGE", "");
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.getters.getErrorMessage
+    },
+  },
   methods: {
     login() {
       let data = {
