@@ -12,7 +12,7 @@ export default new Vuex.Store({
     role: "",
     rooms: [],
     current_room: "",
-    error_message: ""
+    error_message: "",
     updateMessages: []
   },
   getters: {
@@ -22,7 +22,7 @@ export default new Vuex.Store({
     getRole: (state) => state.role,
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
-    getErrorMessage: (state) => state.error_message
+    getErrorMessage: (state) => state.error_message,
     getupdateMessages:(state) => state.updateMessages,
   },
   mutations: {
