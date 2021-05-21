@@ -9,7 +9,7 @@
               <v-spacer></v-spacer>
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on">Users Online</v-btn>
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on"><v-icon style="padding-right: 10px">mdi-account-group</v-icon> {{users.length}}</v-btn>
                 </template>
                 <v-list>
                   <v-list-item v-for="user in users" :key="user">
@@ -19,7 +19,14 @@
               </v-menu>
             </v-card-title>
             <v-divider class="mx-4"></v-divider>
-            <v-card-text class="flex-grow-1 overflow-y-auto scrollbar" v-chat-scroll="{ always: true, smooth: true }">
+            <div class="centerPopup">
+              <ul style="list-style-type: none; padding: 0;"> 
+                <li v-for="updateMessage in updateMessages" v-bind:key="updateMessage.index" style="padding-top: 5px;" >
+                 <v-chip class="updatePopup" v-show="updateMessage.visible">{{updateMessage.msg}}</v-chip>
+                </li>
+              </ul>
+              </div>
+            <v-card-text class="flex-grow-1 overflow-y-auto scrollbar" v-chat-scroll="{ always: true, smooth: true }"> 
               <template v-for="message in messages">
                 <div v-bind:key="message.index" :class="{ 'd-flex flex-row-reverse': message.username === roomAndUser.username }">
                   <v-menu offset-y>
@@ -35,11 +42,12 @@
                           </v-col>
                         </v-row>
                       </v-chip>
-                      <v-chip v-for="updatemsg in updateMessages" :key="updatemsg">{{updatemsg}}</v-chip>
                     </template>
                   </v-menu>
                 </div>
               </template>
+             
+             
             </v-card-text>
             <v-card-text class="flex-shrink-1">
               <v-text-field required v-model="msg" label="Nachricht..." type="text" no-details outlined append-outer-icon="mdi-send" @keyup.enter="sendMessage" @click:append-outer="sendMessage" hide-details />
@@ -62,7 +70,7 @@ export default {
       msg: "",
       roomAndUser: { username: "", room: "" },
       room_data: null,
-      updateMessages: [],
+      updateMessages: []
     };
   },
   methods: {
@@ -73,31 +81,26 @@ export default {
           (e) => e.roomId === this.roomAndUser.room
         );
       });
+      
 
       this.listen();
     },
     listen: function () {
       this.$socket.on("userLeft", (user) => {
-        console.log(user + ' has left the chat');
-        this.messages.push({
-          date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString(),
-          msg: user + ' has left the chat',
-          roomId: this.roomAndUser.room,
-          username: "admin",
-        });
         this.users.splice(this.users.indexOf(user), 1);
       });
+      //this.$socket.emit("chat_update");
 
       this.$socket.on("userOnline", (user) => {
-        console.log(user + ' has joined the chat');
         this.users.push(user);
-        this.messages.push({
-          date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString(),
-          msg: user + ' has joined the chat',
-          roomId: this.roomAndUser.room,
-          username: "admin",
-        });
+        this.updateMessages.push( {
+          msg: user + ' ist dem Chat beigetreten',
+          visible: true
+        })
+        const msg = this.updateMessages[this.updateMessages.length-1]
+        setTimeout(() => msg.visible = false, 4000)
       });
+
 
       this.$socket.on("message", (msg) => {
         this.messages.push(msg);
@@ -122,7 +125,13 @@ export default {
       this.room_data = this.getRooms.filter(
         (e) => e._id === this.roomAndUser.room
       );
+      console.log(this.room_data)
     },
+    getUpdateMessagesData(){
+      this.updateMessages = this.getUpdateMessages.filter(
+        (e) => e.roomId == this.roomAndUser.room
+      )
+    }
   },
   created() {
     this.dispatchRooms();
@@ -131,12 +140,16 @@ export default {
     getRooms() {
       return this.$store.getters.getRooms;
     },
+    getUpdateMessages() {
+      return this.$store.getters.getupdateMessages;
+    }
   },
 
   mounted: function () {
     this.roomAndUser.username = this.$store.state.username;
     this.roomAndUser.room = this.$store.state.current_room;
     this.getRoomData();
+    this.getUpdateMessagesData();
     this.joinRoom();
   },
   watch: {},
@@ -152,5 +165,18 @@ https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
 .scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+.updatePopup{
+  padding: 12px;
+  max-width: 400px;
+  font-size: 0.7rem;
+  justify-content: center;
+}
+.centerPopup{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

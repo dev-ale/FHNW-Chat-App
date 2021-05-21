@@ -13,6 +13,7 @@ export default new Vuex.Store({
     rooms: [],
     current_room: "",
     error_message: ""
+    updateMessages: []
   },
   getters: {
     isAuthenticated: (state) => !!state.token,
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
     getErrorMessage: (state) => state.error_message
+    getupdateMessages:(state) => state.updateMessages,
   },
   mutations: {
     AUTH_REQUEST: (state) => {
@@ -49,9 +51,11 @@ export default new Vuex.Store({
     SET_ERRORMESSAGE: (state, payload) => {
         state.error_message = payload;
     },
+    SET_UPDATEMESSAGES: (state, payload) => {
+      state.updateMessages.push(payload)
+    }
   },
   actions: {
-
     ROOMS: ({ commit, dispatch }) => {
       return new Promise((resolve, reject) => {
         axios({ url: "api/dashboard/", method: "GET" })
@@ -84,8 +88,6 @@ export default new Vuex.Store({
             resolve(resp);
           })
           .catch((err) => {
-            console.log(err.response.data);
-            console.log(err.response.status);
             commit("AUTH_ERROR", err);
             commit("SET_ERRORMESSAGE", err.response.data);
             localStorage.removeItem("auth-token"); // if the request fails, remove any possible user token if possible
@@ -99,7 +101,6 @@ export default new Vuex.Store({
         commit("AUTH_REQUEST");
         axios({ url: "api/user/register", data: user, method: "POST" })
           .then((resp) => {
-            console.log(resp);
             dispatch("USER_REQUEST");
             resolve(resp);
             dispatch("AUTH_REQUEST");
