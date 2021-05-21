@@ -2,8 +2,7 @@
   <v-container>
     <v-row>
       <v-col align="center">
-        <h2 class="white--text">welcome</h2>
-        <p>Welcome text......</p>
+        <h2 class="white--text">Wilkommen beim FHNW Chat für Studierende und Dozenten</h2>
       </v-col>
     </v-row>
     <v-row>

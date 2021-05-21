@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -52,15 +53,11 @@ export default new Vuex.Store({
     },
     SET_USERSONLINE: (state, user) => {
       state.usersOnline.push(user)
-      console.log("SET_USERSONLINE")
-      console.log(state.usersOnline.length)
 
 
     },
     REMOVE_USERSONLINE: (state, index) => {
       state.usersOnline.splice(index,1);
-      console.log("REMOVE_USERSONLINE")
-      console.log(state.usersOnline.length)
 
     },
     SET_ERRORMESSAGE: (state, payload) => {
@@ -168,5 +165,5 @@ export default new Vuex.Store({
     },
   },
   modules: {},
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState(),], 
 });

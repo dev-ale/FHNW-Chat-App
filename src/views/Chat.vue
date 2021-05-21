@@ -104,7 +104,7 @@ export default {
           }
         }
         this.$store.commit("REMOVE_USERSONLINE", index);
-
+        
         this.getUsersOnlineData();
       });
 
@@ -130,11 +130,7 @@ export default {
         if (!alreadyOnline) {
           this.$store.commit("SET_USERSONLINE", current_user);
         }
-
         this.getUsersOnlineData();
-        console.log("usersOnline")
-        console.log(this.users.length)
-        console.log(this.getUsersOnline.length)
       });
 
       this.$socket.on("message", (msg) => {
@@ -163,7 +159,11 @@ export default {
     getUsersOnlineData: function () {
        this.users = this.getUsersOnline.filter(
         (e) => e.roomId === this.roomAndUser.room
-      );
+      ); 
+      console.log(this.users)
+      console.log(this.getUsersOnline)
+      console.log(this.$store.getters.getUsersOnline)
+       
     },
   },
   created() {
