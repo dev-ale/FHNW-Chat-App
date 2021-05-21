@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row > 
       <v-col cols="auto" class="flex-grow-1 flex-shrink-0">
-        <v-responsive class="overflow-y-hidden fill-height" height="600">
+        <v-responsive class="overflow-y-hidden fill-height" height="80vh">
           <v-card flat class="d-flex flex-column fill-height">
             <v-card-title>
               {{ room_data[0].name }}
