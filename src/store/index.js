@@ -52,9 +52,16 @@ export default new Vuex.Store({
     },
     SET_USERSONLINE: (state, user) => {
       state.usersOnline.push(user)
+      console.log("SET_USERSONLINE")
+      console.log(state.usersOnline.length)
+
+
     },
-    REMOVE_USERSONLINE: (state, user) => {
-      state.usersOnline.splice(user,1);
+    REMOVE_USERSONLINE: (state, index) => {
+      state.usersOnline.splice(index,1);
+      console.log("REMOVE_USERSONLINE")
+      console.log(state.usersOnline.length)
+
     },
     SET_ERRORMESSAGE: (state, payload) => {
         state.error_message = payload;

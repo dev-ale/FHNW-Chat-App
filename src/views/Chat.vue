@@ -81,9 +81,6 @@ export default {
         this.messages = data.messages.filter(
           (e) => e.roomId === this.roomAndUser.room
         );
-        this.users = data.usersOnline.filter(
-          (e) => e.roomId === this.roomAndUser.room
-        );
       });
 
       this.listen();
@@ -96,19 +93,19 @@ export default {
         });
         const msg = this.updateMessages[this.updateMessages.length - 1];
         setTimeout(() => (msg.visible = false), 4000);
+        let current_user = { username: user, roomId: this.roomAndUser.room };
+        var index = null;
+        for (let i = 0; i < this.getUsersOnline.length; i++) {
+          if (
+            this.getUsersOnline[i].username === current_user.username &&
+            this.getUsersOnline[i].roomId === current_user.roomId
+          ) {
+            index = i;
+          }
+        }
+        this.$store.commit("REMOVE_USERSONLINE", index);
 
-        this.users.splice(
-          this.users.indexOf({
-            username: user,
-            roomId: this.roomAndUser.room,
-          }),
-          1
-        );
-        /*
-        this.$store.commit('REMOVE_USERSONLINE', this.getUsersOnline.indexOf({
-          username: user, 
-          roomId: this.roomAndUser.room
-          })) */
+        this.getUsersOnlineData();
       });
 
       this.$socket.on("userOnline", (user) => {
@@ -119,20 +116,25 @@ export default {
         const msg = this.updateMessages[this.updateMessages.length - 1];
         setTimeout(() => (msg.visible = false), 4000);
 
-        this.users.push({
-          username: user,
-          roomId: this.roomAndUser.room,
-        });
-        console.log(this.users)
-                console.log(this.users.length)
+        let current_user = { username: user, roomId: this.roomAndUser.room };
+        //this.users.push(current_user)
+        let alreadyOnline = false;
+        for (let i = 0; i < this.getUsersOnline.length; i++) {
+          if (
+            this.getUsersOnline[i].username === current_user.username &&
+            this.getUsersOnline[i].roomId === current_user.roomId
+          ) {
+            alreadyOnline = true;
+          }
+        }
+        if (!alreadyOnline) {
+          this.$store.commit("SET_USERSONLINE", current_user);
+        }
 
-
-        this.$socket.emit("addOnlineUser");
-        /*
-        this.$store.commit('SET_USERSONLINE', {
-          username: user, 
-          roomId: this.roomAndUser.room
-          }) */
+        this.getUsersOnlineData();
+        console.log("usersOnline")
+        console.log(this.users.length)
+        console.log(this.getUsersOnline.length)
       });
 
       this.$socket.on("message", (msg) => {
@@ -158,12 +160,11 @@ export default {
         (e) => e._id === this.roomAndUser.room
       );
     },
-    /* getUsersOnlineData: function() {
-      this.users = this.getUsersOnline.filter(
-        (e) => e.roomId === this.roomAndUser.room) 
-            console.log(this.users)
-
-    }  */
+    getUsersOnlineData: function () {
+       this.users = this.getUsersOnline.filter(
+        (e) => e.roomId === this.roomAndUser.room
+      );
+    },
   },
   created() {
     this.dispatchRooms();
@@ -172,16 +173,15 @@ export default {
     getRooms() {
       return this.$store.getters.getRooms;
     },
-    /* getUsersOnline() {
-      return this.$store.getters.getUsersOnline
-    } */
+    getUsersOnline() {
+      return this.$store.getters.getUsersOnline;
+    },
   },
 
   mounted: function () {
     this.roomAndUser.username = this.$store.state.username;
     this.roomAndUser.room = this.$store.state.current_room;
     this.getRoomData();
-    // this.getUsersOnlineData();
     this.joinRoom();
   },
 };

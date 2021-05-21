@@ -37,7 +37,6 @@ app.get(/.*/, function (req, res) {
 const port = process.env.PORT || 5000;
 
 const SocketIO = require("socket.io");
-const { resolve } = require('path');
 
 const server= app.listen(port, () => {
     console.log(`socket Listening on port 5000`);
@@ -47,7 +46,6 @@ var io = SocketIO(server)
 
 
 var messages = []
-var usersOnline = []
 
 // Get MongoDB Data
  MessagesModel.find((err, result) => {
@@ -65,37 +63,13 @@ io.on("connection", (socket) => {
     socket.join(socket.room);
 
     console.log(`${socket.username} has connected to room ${socket.room}`);
-
-/*      socket.broadcast.emit("userOnline", socket.username);
- */    
     io.to(socket.room).emit("userOnline", socket.username);
-    io.on("addOnlineUser", () => {
-      onlineUser.push({username: socket.username, roomId: socket.room })
-    })
-
-    //Welcome User in Chat
-    //TODO NOT WORKING THIS FUNCTION
-  /*    io.on("chat_update", () => {
-      let message = new MessagesModel({
-        username: 'Chat-Bot',
-        msg: 'Willkomen im Chat' + socket.room,
-        roomId: socket.room,
-        date: today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear()+': '+today.toLocaleTimeString()
-      })
-      io.to(socket.room).emit("message", message);
-    }); */ 
+ 
 
     //Passing Data from Database
     io.to(socket.room).emit("db_data", {
       messages: messages,
-      usersOnline: usersOnline
     }); 
-
-    //Update Users in the Chat that a new User is online
-   /*  socket.broadcast.to(socket.room).emit("update_newUser", {
-      username: socket.username,
-      message: `${socket.username} ist dem Chat beigetreten.`,
-    }); */ 
 
    
 
@@ -122,7 +96,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
       socket.leave(socket.room)
       console.log(`${socket.username} hat den Chat verlassen.`);
-      io.emit("userLeft", socket.username);
+      io.to(socket.room).emit("userLeft", socket.username);
     });
   });
 });
