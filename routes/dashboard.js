@@ -3,18 +3,15 @@ const verify = require('../verifyToken');
 const Room = require('../model/Room');
 const {roomValidation} = require('../validation');
 
-router.get('/', async (req,res) => {
+router.get('/', verify, async (req,res) => {
     Room.collection.find().toArray().then(results => {
-        console.log('get rooms called')
-        console.log(results)
         res.send(results);
     })
         .catch()
 });
 
 // ADD ROOM
-router.post('/create', async (req, res) => {
-    console.log('create room called')
+router.post('/create', verify, async (req, res) => {
     // Validate Data before creating new room
     const { error } = roomValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -36,6 +33,23 @@ router.post('/create', async (req, res) => {
     }catch(err){
         res.status(400).send(err);
     }
+});
+
+// DELETE ROOM
+router.delete('/delete/:id', verify, async (req, res) => {
+    //check if room with ID exists in DB
+    const roomExist = await Room.findOne({_id: req.params.id});
+    if (!roomExist) {
+        return res.status(400).send('Room does not exist');
+    }else {
+        try{
+            const deletedRoom = await Room.deleteOne( { _id: req.params.id } );
+            res.send('room: ' + req.params.id + ' removed');
+        }catch(err){
+            res.status(400).send(err);
+        }
+    }
+
 });
 
 module.exports = router;

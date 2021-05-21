@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem("auth-token") || "",
     status: "",
-    username: "user",
+    username: "",
+    role: "",
     rooms: [],
     current_room: "",
     updateMessages: []
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     isAuthenticated: (state) => !!state.token,
     authStatus: (state) => state.status,
     getUsername: (state) => state.username,
+    getRole: (state) => state.role,
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
     getupdateMessages:(state) => state.updateMessages,
@@ -34,6 +36,9 @@ export default new Vuex.Store({
     },
     SET_USERNAME: (state, username) => {
       state.username = username;
+    },
+    SET_ROLE: (state, role) => {
+      state.role = role;
     },
     SET_ROOMS: (state, rooms) => {
       state.rooms = rooms;
@@ -73,6 +78,8 @@ export default new Vuex.Store({
             dispatch("USER_REQUEST");
             const username = resp.data.username;
             commit("SET_USERNAME", username);
+            const role = resp.data.role;
+            commit("SET_ROLE", role);
             resolve(resp);
           })
           .catch((err) => {
@@ -102,9 +109,38 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("AUTH_LOGOUT");
         localStorage.removeItem("auth-token"); // clear your user's token from localstorage
+        localStorage.removeItem("vuex"); // clear your user's token from localstorage
+
         // remove the axios default header
         delete axios.defaults.headers.common["auth-token"];
         resolve();
+      });
+    },
+    POST_ROOM: ({ commit, dispatch }, room) => {
+      return new Promise((resolve, reject) => {
+        // The Promise used for router redirect in login
+        commit("POST_ROOM");
+        axios({ url: "api/dashboard/create", data: room, method: "POST" })
+            .then((resp) => {
+              resolve(resp);
+            })
+            .catch((err) => {
+              reject(err);
+            });
+      });
+    },
+    DELETE_ROOM: ({ commit, dispatch }, roomId) => {
+      return new Promise((resolve, reject) => {
+        // The Promise used for router redirect in login
+        commit("DELETE_ROOM");
+
+        axios({ url: "api/dashboard/delete/" + roomId,  method: "DELETE" })
+            .then((resp) => {
+              resolve(resp);
+            })
+            .catch((err) => {
+              reject(err);
+            });
       });
     },
   },

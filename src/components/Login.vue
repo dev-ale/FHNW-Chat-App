@@ -29,6 +29,13 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+        <v-row>
+          <v-col align="center">
+            <v-btn to="/" icon dark outlined class="mt-5">
+              <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-flex>
     </v-layout>
   </v-container>
@@ -42,8 +49,8 @@ import store from '../store'
 export default {
   name: "Login",
   data: () => ({
-    email: "ale.iphone@gmail.com",
-    password: "Wikipedia91",
+    email: "",
+    password: "",
     name: ""
   }),
   methods: {
@@ -54,24 +61,6 @@ export default {
         this.$router.push('/dashboard')
       })
     }
-    /*login() {
-      let data = {
-        email: this.email,
-        password: this.password
-      };
-      axios.post("/api/user/login", data)
-          .then((response) => {
-            console.log(response.data)
-            console.log(response)
-            this.username = response.data["name"]
-            const authtoken = response.headers["auth-token"];
-            router.push("/dashboard")
-          })
-          .catch((errors) => {
-            console.log("Cannot log in")
-            console.log(errors)
-          })
-    }*/
   }
 }
 </script>

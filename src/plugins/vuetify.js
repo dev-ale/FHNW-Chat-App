@@ -9,7 +9,8 @@ export default new Vuetify({
             light: {
                 primary: '#0277bd',
                 fhnw: '#FDE70E',
-                admin:'#c44348'
+                admin:'#c44348',
+                general: '#0277bd',
             },
         },
     },

@@ -35,6 +35,14 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+        <v-row>
+          <v-col align="center">
+            <v-btn to="/" icon dark outlined class="mt-5">
+              <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+
       </v-flex>
     </v-layout>
   </v-container>
@@ -88,9 +96,7 @@ export default {
       };
       axios.post("/api/user/register", data)
           .then((response) => {
-            console.log("Registered User")
             this.login()
-            console.log(response)
             router.push("/dashboard")
           })
           .catch((errors) => {
