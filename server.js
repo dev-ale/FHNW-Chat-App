@@ -47,6 +47,7 @@ var io = SocketIO(server)
 
 
 var messages = []
+var usersOnline = []
 
 // Get MongoDB Data
  MessagesModel.find((err, result) => {
@@ -68,6 +69,9 @@ io.on("connection", (socket) => {
 /*      socket.broadcast.emit("userOnline", socket.username);
  */    
     io.to(socket.room).emit("userOnline", socket.username);
+    io.on("addOnlineUser", () => {
+      onlineUser.push({username: socket.username, roomId: socket.room })
+    })
 
     //Welcome User in Chat
     //TODO NOT WORKING THIS FUNCTION
@@ -84,6 +88,7 @@ io.on("connection", (socket) => {
     //Passing Data from Database
     io.to(socket.room).emit("db_data", {
       messages: messages,
+      usersOnline: usersOnline
     }); 
 
     //Update Users in the Chat that a new User is online

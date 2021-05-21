@@ -21,7 +21,7 @@ export default new Vuex.Store({
     getRole: (state) => state.role,
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
-    getUsersOnlince: (state) => state.usersOnline
+    getUsersOnline: (state) => state.usersOnline
   },
   mutations: {
     AUTH_REQUEST: (state) => {
@@ -48,6 +48,9 @@ export default new Vuex.Store({
     },
     SET_USERSONLINE: (state, user) => {
       state.usersOnline.push(user)
+    },
+    REMOVE_USERSONLINE: (state, user) => {
+      state.usersOnline.splice(user,1);
     }
    
   },
