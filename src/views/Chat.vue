@@ -9,7 +9,7 @@
               <v-spacer></v-spacer>
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="primary" dark v-bind="attrs" v-on="on"><v-icon style="padding-right: 10px">mdi-account-group</v-icon> {{users.length}}</v-btn>
+                  <v-btn color="primary" dark v-bind="attrs" v-on="on"><v-icon style="padding-right: 10px">mdi-account-group</v-icon> {{getUsersOnline.length}}</v-btn>
                 </template>
                 <v-list>
                   <v-list-item v-for="user in users" :key="user">
@@ -20,7 +20,7 @@
             </v-card-title>
             <v-divider class="mx-4"></v-divider>
             <div class="centerPopup">
-              <ul style="list-style-type: none; padding: 0;"> 
+              <ul class="centerUl"> 
                 <li v-for="updateMessage in updateMessages" v-bind:key="updateMessage.index" style="padding-top: 5px;" >
                  <v-chip class="updatePopup" v-show="updateMessage.visible">{{updateMessage.msg}}</v-chip>
                 </li>
@@ -88,8 +88,13 @@ export default {
     listen: function () {
       this.$socket.on("userLeft", (user) => {
         this.users.splice(this.users.indexOf(user), 1);
+        this.updateMessages.push( {
+          msg: user + ' hat den Chat verlassen',
+          visible: true
+        })
+        const msg = this.updateMessages[this.updateMessages.length-1]
+        setTimeout(() => msg.visible = false, 4000)
       });
-      //this.$socket.emit("chat_update");
 
       this.$socket.on("userOnline", (user) => {
         this.users.push(user);
@@ -127,11 +132,6 @@ export default {
       );
       console.log(this.room_data)
     },
-    getUpdateMessagesData(){
-      this.updateMessages = this.getUpdateMessages.filter(
-        (e) => e.roomId == this.roomAndUser.room
-      )
-    }
   },
   created() {
     this.dispatchRooms();
@@ -140,16 +140,16 @@ export default {
     getRooms() {
       return this.$store.getters.getRooms;
     },
-    getUpdateMessages() {
-      return this.$store.getters.getupdateMessages;
+    getUsersOnline() {
+      return this.$store.getters.getUsersOnline
     }
+  
   },
 
   mounted: function () {
     this.roomAndUser.username = this.$store.state.username;
     this.roomAndUser.room = this.$store.state.current_room;
     this.getRoomData();
-    this.getUpdateMessagesData();
     this.joinRoom();
   },
   watch: {},
@@ -178,5 +178,10 @@ https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
   position: relative;
   margin-left: auto;
   margin-right: auto;
+}
+.centerUl {
+  list-style-type: none; 
+  padding: 0;
+  text-align: center;
 }
 </style>
