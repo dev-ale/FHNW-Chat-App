@@ -70,13 +70,17 @@ io.on("connection", (socket) => {
     io.to(socket.room).emit("userOnline", socket.username);
 
     //Welcome User in Chat
-    /* socket.to(socket.room).emit("chat_update", {
-     
-      username: socket.username,
-      msg: `Wilkommen im Chat ${socket.room}`,
-      roomId: socket.room,
-      date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString()
-    }); */
+    //TODO NOT WORKING THIS FUNCTION
+     io.to(socket.room).on("chat_update", () => {
+      let message = new MessagesModel({
+        username: 'Chat-Bot',
+        msg: 'Willkomen im Chat' + socket.room,
+        roomId: socket.room,
+        date: today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear()+': '+today.toLocaleTimeString()
+      })
+      io.to(socket.room).emit("message", message);
+
+    }); 
 
     //Passing Data from Database
     io.to(socket.room).emit("db_data", {
@@ -97,7 +101,7 @@ io.on("connection", (socket) => {
         username: socket.username,
         msg: msg,
         roomId: socket.room,
-        date: today.getDate()+'.'+today.getMonth()+'.'+today.getFullYear()+': '+today.toLocaleTimeString()
+        date: today.getDate()+'.'+(today.getMonth()+1)+'.'+today.getFullYear()+': '+today.toLocaleTimeString()
       })
       // Save Message to Database
         message.save((err, result) => {

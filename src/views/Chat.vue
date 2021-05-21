@@ -22,7 +22,7 @@
             <v-card-text class="flex-grow-1 overflow-y-auto scrollbar" v-chat-scroll="{ always: true, smooth: true }">
               <template v-for="message in messages">
                 <div v-bind:key="message.index" :class="{ 'd-flex flex-row-reverse': message.username === roomAndUser.username }">
-                  <v-menu offset-y>
+                  <v-menu offset-y v-if="message.username != 'Chat-Bot'">
                     <template v-slot:activator="{ on }">
                       <v-chip :color="message.username === roomAndUser.username ? 'primary' : ''" dark style="height:auto;white-space: normal;" class="pa-4 mb-2" v-on="on">
                         <v-row no-gutters>
@@ -35,10 +35,11 @@
                           </v-col>
                         </v-row>
                       </v-chip>
-                      <v-chip v-for="updatemsg in updateMessages" :key="updatemsg">{{updatemsg}}</v-chip>
                     </template>
                   </v-menu>
+                   <v-chip v-if="message.username == 'Chat-Bot'" >{{message.msg}}</v-chip>
                 </div>
+                
               </template>
             </v-card-text>
             <v-card-text class="flex-shrink-1">
@@ -62,7 +63,7 @@ export default {
       msg: "",
       roomAndUser: { username: "", room: "" },
       room_data: null,
-      updateMessages: [],
+      updateMessages: []
     };
   },
   methods: {
@@ -78,26 +79,21 @@ export default {
     },
     listen: function () {
       this.$socket.on("userLeft", (user) => {
-        console.log(user + ' has left the chat');
-        this.messages.push({
-          date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString(),
-          msg: user + ' has left the chat',
-          roomId: this.roomAndUser.room,
-          username: "admin",
-        });
         this.users.splice(this.users.indexOf(user), 1);
       });
+      this.$socket.emit("chat_update");
 
       this.$socket.on("userOnline", (user) => {
-        console.log(user + ' has joined the chat');
         this.users.push(user);
-        this.messages.push({
+       /*  this.$store.commit('SET_UPDATEMESSAGES',
+        {
           date: new Date().getDate()+'.'+new Date().getMonth()+'.'+new Date().getFullYear()+': '+new Date().toLocaleTimeString(),
           msg: user + ' has joined the chat',
           roomId: this.roomAndUser.room,
-          username: "admin",
-        });
+          username: "Chat-Bot",
+        }); */
       });
+
 
       this.$socket.on("message", (msg) => {
         this.messages.push(msg);
@@ -123,6 +119,11 @@ export default {
         (e) => e._id === this.roomAndUser.room
       );
     },
+    getUpdateMessagesData(){
+      this.updateMessages = this.getUpdateMessages.filter(
+        (e) => e.roomId == this.roomAndUser.room
+      )
+    }
   },
   created() {
     this.dispatchRooms();
@@ -131,12 +132,16 @@ export default {
     getRooms() {
       return this.$store.getters.getRooms;
     },
+    getUpdateMessages() {
+      return this.$store.getters.getupdateMessages;
+    }
   },
 
   mounted: function () {
     this.roomAndUser.username = this.$store.state.username;
     this.roomAndUser.room = this.$store.state.current_room;
     this.getRoomData();
+    this.getUpdateMessagesData();
     this.joinRoom();
   },
   watch: {},

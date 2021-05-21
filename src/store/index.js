@@ -11,6 +11,7 @@ export default new Vuex.Store({
     username: "user",
     rooms: [],
     current_room: "",
+    updateMessages: []
   },
   getters: {
     isAuthenticated: (state) => !!state.token,
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     getUsername: (state) => state.username,
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
+    getupdateMessages:(state) => state.updateMessages,
   },
   mutations: {
     AUTH_REQUEST: (state) => {
@@ -39,6 +41,9 @@ export default new Vuex.Store({
     SET_CURRENTROOM: (state, payload) => {
       state.current_room = payload;
     },
+    SET_UPDATEMESSAGES: (state, payload) => {
+      state.updateMessages.push(payload)
+    }
   },
   actions: {
     ROOMS: ({ commit, dispatch }) => {
