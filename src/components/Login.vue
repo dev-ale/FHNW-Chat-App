@@ -23,6 +23,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
+            <p class="caption red--text">{{ errorMessage }}</p>
             <v-spacer></v-spacer>
             <v-btn @click="login" dark color="primary" >
               Login
@@ -51,7 +52,7 @@ export default {
   data: () => ({
     email: "",
     password: "",
-    name: ""
+    name: "",
   }),
   methods: {
     login: function () {
@@ -61,6 +62,14 @@ export default {
         this.$router.push('/dashboard')
       })
     }
+  },
+  mounted() {
+    this.$store.commit("SET_ERRORMESSAGE", "");
+  },
+  computed: {
+    errorMessage() {
+      return this.$store.getters.getErrorMessage
+    },
   }
 }
 </script>
