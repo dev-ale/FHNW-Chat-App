@@ -116,7 +116,7 @@ export default {
         this.messages.push(msg);
       });
     },
-    
+
     sendMessage: function () {
       /* Check if String is empty or only contains spaces
        https://stackoverflow.com/questions/10261986/how-to-detect-string-which-contains-only-spaces/50971250 */
@@ -155,10 +155,10 @@ export default {
 </script>
 
 <style scoped>
-/* Hide scrollbar
+/* Hide scrollbar 
 https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
 .scrollbar::-webkit-scrollbar {
-  display: none;
+  display: none; 
 }
 .scrollbar {
   -ms-overflow-style: none; /* IE and Edge */

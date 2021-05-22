@@ -90,7 +90,7 @@ io.on("connection", (socket) => {
       io.to(socket.room).emit("message", message);
     });
 
-    // User disconected
+    // disconect user from room
     socket.on("disconnect", () => {
       let room = socket.room;
       let user = socket.username;
@@ -99,7 +99,7 @@ io.on("connection", (socket) => {
         onlineUsers.findIndex((a) => (a.username === user && a.room === room)),1);
       //send update Message to Users in Chat
       io.to(socket.room).emit("userLeft", socket.username);
-      
+
       //send OnlineUsers to Client
       io.to(socket.room).emit("updateOnlineUser", onlineUsers);
       socket.leave(socket.room);
