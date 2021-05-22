@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row > 
+    <v-row>
       <v-col cols="auto" class="flex-grow-1 flex-shrink-0">
         <v-responsive class="overflow-y-hidden fill-height" height="80vh">
           <v-card flat class="d-flex flex-column fill-height">
@@ -11,11 +11,11 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="primary" dark v-bind="attrs" v-on="on">
                     <v-icon style="padding-right: 10px">mdi-account-group</v-icon>
-                    {{users.length}}
+                    {{onlineUsers.length}}
                   </v-btn>
                 </template>
                 <v-list>
-                  <v-list-item v-for="user in users" :key="user">
+                  <v-list-item v-for="user in onlineUsers" :key="user">
                     <v-list-item-title>{{ user.username }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -67,7 +67,7 @@ export default {
   data: function () {
     return {
       messages: [],
-      users: [],
+      onlineUsers: [],
       msg: "",
       roomAndUser: { username: "", room: "" },
       room_data: null,
@@ -75,6 +75,7 @@ export default {
     };
   },
   methods: {
+    // Join current user to room 
     joinRoom: function () {
       this.$socket.emit("joinRoom", this.roomAndUser);
       this.$socket.on("db_data", (data) => {
@@ -85,7 +86,14 @@ export default {
 
       this.listen();
     },
+    //get all Users which are Online
     listen: function () {
+      this.$socket.on("updateOnlineUser", (onlineUsers) => {
+        this.onlineUsers = onlineUsers.filter(
+          (e) => e.room === this.roomAndUser.room
+        );
+      });
+      // update with popup if a user has left the chat
       this.$socket.on("userLeft", (user) => {
         this.updateMessages.push({
           msg: user + " hat den Chat verlassen",
@@ -93,21 +101,8 @@ export default {
         });
         const msg = this.updateMessages[this.updateMessages.length - 1];
         setTimeout(() => (msg.visible = false), 4000);
-        let current_user = { username: user, roomId: this.roomAndUser.room };
-        var index = null;
-        for (let i = 0; i < this.getUsersOnline.length; i++) {
-          if (
-            this.getUsersOnline[i].username === current_user.username &&
-            this.getUsersOnline[i].roomId === current_user.roomId
-          ) {
-            index = i;
-          }
-        }
-        this.$store.commit("REMOVE_USERSONLINE", index);
-        
-        this.getUsersOnlineData();
       });
-
+      //update with popup if a user has joined the chat
       this.$socket.on("userOnline", (user) => {
         this.updateMessages.push({
           msg: user + " ist dem Chat beigetreten",
@@ -115,29 +110,13 @@ export default {
         });
         const msg = this.updateMessages[this.updateMessages.length - 1];
         setTimeout(() => (msg.visible = false), 4000);
-
-        let current_user = { username: user, roomId: this.roomAndUser.room };
-        //this.users.push(current_user)
-        let alreadyOnline = false;
-        for (let i = 0; i < this.getUsersOnline.length; i++) {
-          if (
-            this.getUsersOnline[i].username === current_user.username &&
-            this.getUsersOnline[i].roomId === current_user.roomId
-          ) {
-            alreadyOnline = true;
-          }
-        }
-        if (!alreadyOnline) {
-          this.$store.commit("SET_USERSONLINE", current_user);
-        }
-        this.getUsersOnlineData();
       });
 
       this.$socket.on("message", (msg) => {
         this.messages.push(msg);
       });
     },
-
+    
     sendMessage: function () {
       /* Check if String is empty or only contains spaces
        https://stackoverflow.com/questions/10261986/how-to-detect-string-which-contains-only-spaces/50971250 */
@@ -156,15 +135,6 @@ export default {
         (e) => e._id === this.roomAndUser.room
       );
     },
-    getUsersOnlineData: function () {
-       this.users = this.getUsersOnline.filter(
-        (e) => e.roomId === this.roomAndUser.room
-      ); 
-      console.log(this.users)
-      console.log(this.getUsersOnline)
-      console.log(this.$store.getters.getUsersOnline)
-       
-    },
   },
   created() {
     this.dispatchRooms();
@@ -172,9 +142,6 @@ export default {
   computed: {
     getRooms() {
       return this.$store.getters.getRooms;
-    },
-    getUsersOnline() {
-      return this.$store.getters.getUsersOnline;
     },
   },
 

@@ -13,7 +13,6 @@ export default new Vuex.Store({
     role: "",
     rooms: [],
     current_room: "",
-    usersOnline: [],
     error_message: "",
     updateMessages: []
   },
@@ -24,7 +23,6 @@ export default new Vuex.Store({
     getRole: (state) => state.role,
     getRooms: (state) => state.rooms,
     getCurrentRoom: (state) => state.current_room,
-    getUsersOnline: (state) => state.usersOnline,
     getErrorMessage: (state) => state.error_message,
     getupdateMessages:(state) => state.updateMessages,
   },
@@ -50,15 +48,6 @@ export default new Vuex.Store({
     },
     SET_CURRENTROOM: (state, room) => {
       state.current_room = room;
-    },
-    SET_USERSONLINE: (state, user) => {
-      state.usersOnline.push(user)
-
-
-    },
-    REMOVE_USERSONLINE: (state, index) => {
-      state.usersOnline.splice(index,1);
-
     },
     SET_ERRORMESSAGE: (state, payload) => {
         state.error_message = payload;
