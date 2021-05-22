@@ -1,13 +1,15 @@
 <template>
-  <v-card>
+  <v-card color="primary" class="white--text">
     <v-card-title>
       <span class="headline">Add New Room</span>
     </v-card-title>
     <v-card-text>
       <v-container>
-        <v-row>
+        <v-row class="white--text">
           <v-col cols="12">
             <v-text-field
+                dark
+                color="accent"
                 v-model="chatName"
                 label="Chatname *"
                 required
@@ -15,6 +17,8 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
+                dark
+                color="accent"
                 label="Creator"
                 required
                 disabled
@@ -23,6 +27,8 @@
           </v-col>
           <v-col cols="12">
             <v-select
+                dark
+                color="accent"
                 v-model="type"
                 :items="['general', 'fhnw', 'admin']"
                 label="Type *"
@@ -31,19 +37,19 @@
           </v-col>
         </v-row>
       </v-container>
-      <small>*indicates required field</small>
+      <small class="white--text">*indicates required field</small>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn
-          color="blue darken-1"
+          color="third"
           text
           @click="close"
       >
         Cancel
       </v-btn>
       <v-btn
-          color="blue darken-1"
+          color="accent"
           text
           @click="addRoom(chatName, type)"
       >
@@ -80,5 +86,8 @@ name: "NewRoom",
 </script>
 
 <style scoped>
+.my-text-style >>> .v-text-field__slot input {
+  color: red
+}
 
 </style>
