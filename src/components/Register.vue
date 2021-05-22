@@ -2,7 +2,7 @@
   <v-container>
     <v-layout wrap>
       <v-flex sm12 md6 offset-md3>
-        <v-card elevation="4" light tag="section">
+        <v-card elevation="4" light tag="section" color="third">
           <v-divider></v-divider>
           <v-card-text>
             <v-form>
@@ -31,7 +31,7 @@
           <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
             <p class="caption red--text">{{ errorMessage }}</p>
             <v-spacer></v-spacer>
-            <v-btn @click="register" dark color="primary" >
+            <v-btn @click="register" dark class="text--primary" color="accent" >
               Registrieren
             </v-btn>
           </v-card-actions>

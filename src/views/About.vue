@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card height="80vh">
+    <v-card height="80vh" color="third">
       <v-card-text>
         <v-card-title>
           <v-spacer></v-spacer>
@@ -10,8 +10,8 @@
             <h2>Technologien</h2>
             <br>
                 <v-expansion-panels>
-              <v-expansion-panel v-for="technologie in technologien" :key="technologie.index">
-                <v-expansion-panel-header>{{technologie.title}}</v-expansion-panel-header>
+              <v-expansion-panel class="primary white--text" v-for="technologie in technologien" :key="technologie.index">
+                <v-expansion-panel-header><strong>{{technologie.title}}</strong></v-expansion-panel-header>
                 <v-expansion-panel-content>{{technologie.beschreibung}}</v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -20,13 +20,13 @@
             <h2>Features</h2>
             <br>
             <v-expansion-panels>
-              <v-expansion-panel v-for="feature in features" :key="feature.index">
-                <v-expansion-panel-header>{{feature.title}}</v-expansion-panel-header>
+              <v-expansion-panel class="primary white--text" v-for="feature in features" :key="feature.index">
+                <v-expansion-panel-header><strong>{{feature.title}}</strong></v-expansion-panel-header>
                 <v-expansion-panel-content>{{feature.beschreibung}}</v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
           </v-col>
-        </v-row> 
+        </v-row>
       </v-card-text>
     </v-card>
   </v-container>
@@ -38,7 +38,7 @@ export default {
   data: function(){
     return {
       features: [{
-        title: "Registrieren", 
+        title: "Registrieren",
         beschreibung: "Mailadresse mit @fhnw.ch Endung = Dozent (Chaträume erstellen, eigene wieder löschen). Alle anderen Mailadressen = Rolle Student (nur Chaten in vorhandenen Räumen). Ausgewählte User = Admin Rolle (löschen und erstellen der Räume, unabhängig vom Ersteller)."
       },
       {
@@ -83,10 +83,10 @@ export default {
          title: "Socket.io ",
          beschreibung: "Server welcher für die Echtzeit und bidirektionale Kommunikation der Chats verwendet wird."
        },
-      
+
      ]
     }
   }
-  
+
 }
 </script>

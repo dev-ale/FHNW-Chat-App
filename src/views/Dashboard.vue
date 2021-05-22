@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card height="80vh" class="overflow-y-auto">
+    <v-card height="80vh" class="overflow-y-auto" color="third">
       <v-card-text>
         <v-card-title>
           <v-row>
@@ -8,7 +8,7 @@
               Hallo, {{ username }} ({{ role }})
             </v-col>
             <v-col align="right">
-              <v-btn @click="dialog = true" v-if="role == 'admin' || role == 'dozent'" class="mr-5" color="primary">Add New Room</v-btn>
+              <v-btn @click="dialog = true" v-if="role == 'admin' || role == 'dozent'" class="mr-5 text--primary" color="accent">Add New Room</v-btn>
               <v-btn icon @click="getRooms" color="primary"><v-icon>mdi-refresh</v-icon></v-btn>
             </v-col>
           </v-row>

@@ -8,17 +8,19 @@
     >
 <!--      -->
       <v-btn small v-if="$store.getters.isAuthenticated" color="primary">
-        <v-icon class="ml-1">mdi-account</v-icon>
+        <v-icon small class="ml-1">mdi-account</v-icon>
         <div v-if="!$vuetify.breakpoint.mobile">{{ $store.getters.getUsername }}</div>
       </v-btn>
       <v-spacer></v-spacer>
 
-      <v-app-bar-title><h2>WebEngineering</h2></v-app-bar-title>
+      <v-app-bar-title>
+        <h2>WebEngineering - <span class="accent--text">ChatApp</span></h2>
+      </v-app-bar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn small v-if="$store.getters.isAuthenticated" color="red" @click="logout">
-        <v-icon class="ml-1">mdi-lock</v-icon>
+      <v-btn small v-if="$store.getters.isAuthenticated" color="error" @click="logout">
+        <v-icon small class="ml-1">mdi-lock</v-icon>
         <div v-if="!$vuetify.breakpoint.mobile">Logout</div>
       </v-btn>
 
@@ -39,6 +41,11 @@
     <v-main class="primary">
       <router-view/>
     </v-main>
+    <v-footer color="primary" class="accent--text">
+      <v-spacer/>
+      made with <v-icon color="accent" class="mr-1 ml-1">mdi-heart</v-icon> by David & Alejandro
+      <v-spacer/>
+    </v-footer>
   </v-app>
 </template>
 

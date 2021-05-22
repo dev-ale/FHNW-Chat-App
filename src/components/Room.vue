@@ -3,8 +3,7 @@
     <v-row>
       <v-col>
         <v-avatar
-            @mouseover="hover = true"
-            @mouseleave="hover = false"
+            class="room"
             :color="color"
             size="128"
             @click="joinRoom"
@@ -14,25 +13,13 @@
           <span v-if="color !== 'fhnw'" class="white--text headline">{{ title }}</span>
           <span v-if="color === 'fhnw'" class="black--text headline">{{ title }}</span>
         </v-avatar>
-        <v-avatar
-            @mouseover="hover = true"
-            @mouseleave="hover = false"
-            :color="color"
-            size="133"
-            @click="joinRoom"
-            style="cursor: pointer"
-            v-if="hover"
-        >
-          <span v-if="color !== 'fhnw'" class="white--text headline">{{ title }}</span>
-          <span v-if="color === 'fhnw'" class="black--text headline">{{ title }}</span>
-        </v-avatar>
         <p class="caption mb-1">{{ creator }}</p>
         <v-container>
           <v-row justify="center" align-items="flex-end" align="center">
             <v-col>
-              <v-btn x-small @click="joinRoom" outlined class="mr-2" color="primary">Join</v-btn>
-              <v-btn x-small @click="dialog = true" v-if="deletable" class="ml-2" outlined color="red">Delete</v-btn>
-              <v-btn x-small @click="dialog = true" v-if="creator == username && role == 'dozent'" class="ml-2" outlined color="red">Delete</v-btn>
+              <v-btn x-small @click="joinRoom" class="mr-2" color="primary">Join</v-btn>
+              <v-btn x-small @click="dialog = true" v-if="deletable" class="ml-2"  color="error">Delete</v-btn>
+              <v-btn x-small @click="dialog = true" v-if="creator == username && role == 'dozent'" class="ml-2"  color="error">Delete</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -77,7 +64,6 @@ export default {
 name: "Room",
   data() {
     return {
-      hover: false,
       dialog: false
     };
   },
@@ -91,7 +77,6 @@ name: "Room",
     role: String
   },
   methods: {
-
     joinRoom() {
       this.$store.commit('SET_CURRENTROOM', this.id)
       this.$router.push('/chat');
@@ -110,5 +95,13 @@ name: "Room",
 </script>
 
 <style scoped>
+
+.room {
+  filter: drop-shadow(0 0 0.1rem #4B4453);
+}
+
+.room:hover {
+  filter: drop-shadow(0 0 0.25rem #4B4453);
+}
 
 </style>
