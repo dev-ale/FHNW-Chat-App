@@ -4,7 +4,7 @@
       <v-card-text>
         <v-card-title>
           <v-row>
-            <v-col>
+            <v-col v-if="!$vuetify.breakpoint.mobile">
               Hallo, {{ username }} ({{ role }})
             </v-col>
             <v-col align="right">
