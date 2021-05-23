@@ -3,7 +3,8 @@
     <v-row>
       <v-col align="center">
         <h2 class="white--text">Wilkommen beim FHNW Chat für Studierende und Dozenten</h2>
-        <p style="font-size:18px;" class="caption third--text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <p style="font-size:18px;" class="caption third--text">Dies ist ein Studierendenprojekt an der FHNW von David Kern und Alejandro Garcia. Diese Applikation ermöglicht es Nutzenden sich zu registrieren und bei erfolgreiche einloggen miteinander in echtzeit zu kommunizieren. Für mehr Informationen klicken Sie auf "About".
+          <br>Ansonsten wünschen wir viel Spass!</p>
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
