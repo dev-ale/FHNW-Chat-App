@@ -19,6 +19,24 @@ yarn build
 ```
 yarn lint
 ```
+## Testing
+### Unit Tests
+```
+yarn test:unit
+```
+### E2E Tests
+Build Application
+```
+yarn build
+```
+Start Server (http://localhost:5000)
+```
+yarn start
+```
+Start Cypress E2E Tests (in a separate terminal window!)
+```
+yarn run cypress open
+```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

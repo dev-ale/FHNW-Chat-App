@@ -1,5 +1,4 @@
 import Room from "@/components/Room.vue";
-import { assert } from "@hapi/joi";
 import { createLocalVue , mount } from "@vue/test-utils";
 import Vuetify from 'vuetify'
 import Vuex from 'vuex'
@@ -71,7 +70,7 @@ describe("Room.vue", () => {
 
     })
 
-    test("commit Mutation SET_CURRENTRoom successfully", () => {
+    test("commit Mutation SET_CURRENTROOM successfully", () => {
         const joinRoom = jest.fn()
         wrapper.find('#joinBtn').trigger('click')
 

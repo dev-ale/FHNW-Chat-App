@@ -8,6 +8,7 @@
         <v-row class="white--text">
           <v-col cols="12">
             <v-text-field
+                id="chat-name"
                 dark
                 color="accent"
                 v-model="chatName"
@@ -27,12 +28,14 @@
           </v-col>
           <v-col cols="12">
             <v-select
+                id="room-type"
                 dark
                 color="accent"
                 v-model="type"
                 :items="['general', 'fhnw', 'admin']"
                 label="Type *"
                 required
+                data-cy='select-input'
             ></v-select>
           </v-col>
         </v-row>
@@ -49,6 +52,7 @@
         Cancel
       </v-btn>
       <v-btn
+          id="add-new-room"
           color="accent"
           text
           @click="addRoom(chatName, type)"

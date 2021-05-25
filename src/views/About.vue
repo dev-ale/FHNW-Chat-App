@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card min-height="80vh" color="third">
+    <v-card min-height="60vh" color="third">
       <v-card-text>
         <v-card-title>
           <v-spacer></v-spacer>

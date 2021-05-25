@@ -17,8 +17,8 @@
         <v-container>
           <v-row justify="center" align-items="flex-end" align="center">
             <v-col>
-              <v-btn x-small @click="joinRoom" class="mr-2" color="primary" id="joinBtn">Join</v-btn>
-              <v-btn x-small @click="dialog = true" v-if="deletable" class="ml-2"  color="error">Delete</v-btn>
+              <v-btn  x-small @click="joinRoom" class="mr-2" color="primary" id="joinBtn">Join</v-btn>
+              <v-btn id="delete-room" x-small @click="dialog = true" v-if="deletable" class="ml-2"  color="error">Delete</v-btn>
               <v-btn x-small @click="dialog = true" v-if="creator == username && role == 'dozent'" class="ml-2"  color="error">Delete</v-btn>
             </v-col>
           </v-row>
@@ -46,6 +46,7 @@
             Cancel
           </v-btn>
           <v-btn
+              id="delete-room-save"
               color="error"
               text
               @click="deleteRoom"
