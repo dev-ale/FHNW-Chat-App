@@ -12,7 +12,7 @@
         <v-btn width="200" to="/register" class="text--primary" color="accent" x-large>Registrieren</v-btn>
       </v-col>
       <v-col align="center" justify="center" cols="12">
-        <v-btn width="200" to="/login" class="text--primary" color="accent" x-large>Einloggen</v-btn>
+        <v-btn width="200" to="/login" class="text--primary" color="accent" x-large id="login">Einloggen</v-btn>
       </v-col>
     </v-row>
   </v-container>

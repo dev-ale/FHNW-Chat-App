@@ -6,7 +6,6 @@
         dark
         flat
     >
-<!--      -->
       <v-btn small v-if="$store.getters.isAuthenticated" color="primary">
         <v-icon small class="ml-1">mdi-account</v-icon>
         <div v-if="!$vuetify.breakpoint.mobile">{{ $store.getters.getUsername }}</div>
@@ -19,7 +18,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn small v-if="$store.getters.isAuthenticated" color="error" @click="logout">
+      <v-btn id="logout" small v-if="$store.getters.isAuthenticated" color="error" @click="logout">
         <v-icon small class="ml-1">mdi-lock</v-icon>
         <div v-if="!$vuetify.breakpoint.mobile">Logout</div>
       </v-btn>
@@ -30,10 +29,8 @@
 
           <v-tab to="/about" v-if="!notChat()">About</v-tab>
           <v-tab v-if="$store.getters.isAuthenticated && !notChat()" to="/dashboard" >Dashboard</v-tab>
-          <v-btn v-if="notChat()" color="primary" v-on:click="getDashboard()" class="pa-3" style="margin-left: 10px">Zurück zum Dashboard</v-btn>
+          <v-btn id="back-to-dashboard" v-if="notChat()" color="primary" v-on:click="getDashboard()" class="pa-3" style="margin-left: 10px">Zurück zum Dashboard</v-btn>
           <v-spacer></v-spacer>
-<!--          <v-tab v-if="!$store.getters.isAuthenticated" to="/register">Register</v-tab>-->
-<!--          <v-tab v-if="!$store.getters.isAuthenticated" to="/login">Login</v-tab>-->
         </v-tabs>
       </template>
     </v-app-bar>

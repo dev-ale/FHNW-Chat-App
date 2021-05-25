@@ -10,14 +10,16 @@
                   outline
                   label="E-Mail"
                   type="text"
-                  v-model="email">
+                  v-model="email"
+                  id="email">
               </v-text-field>
               <v-text-field
                   outline
                   hide-details
                   label="Password"
                   type="password"
-                  v-model="password">
+                  v-model="password"
+                  id="password">
               </v-text-field>
             </v-form>
           </v-card-text>
@@ -25,7 +27,7 @@
           <v-card-actions :class="{ 'pa-3': $vuetify.breakpoint.smAndUp }">
             <p class="caption red--text">{{ errorMessage }}</p>
             <v-spacer></v-spacer>
-            <v-btn @click="login" large class="text--primary" color="accent" >
+            <v-btn @click="login" large class="text--primary" color="accent" id="login">
               Login
             </v-btn>
           </v-card-actions>

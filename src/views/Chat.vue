@@ -51,7 +51,7 @@
               </template>
             </v-card-text>
             <v-card-text class="flex-shrink-1">
-              <v-text-field color="primary" required v-model="msg" label="Nachricht..." type="text" no-details outlined append-outer-icon="mdi-send" @keyup.enter="sendMessage" @click:append-outer="sendMessage" hide-details />
+              <v-text-field id="msg-field" color="primary" required v-model="msg" label="Nachricht..." type="text" no-details outlined append-outer-icon="mdi-send" @keyup.enter="sendMessage" @click:append-outer="sendMessage" hide-details />
             </v-card-text>
           </v-card>
         </v-responsive>

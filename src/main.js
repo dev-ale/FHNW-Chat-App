@@ -7,6 +7,7 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import socket from './socket/index'
 import VueChatScroll from 'vue-chat-scroll'
+import Vuetify from 'vuetify'
 
 
 const token = localStorage.getItem('auth-token')
@@ -15,7 +16,6 @@ if (token) {
 }
 
 Vue.use(VueChatScroll)
-
 
 Vue.config.productionTip = false
 
@@ -27,4 +27,5 @@ new Vue({
   store,
   vuetify,
   render: h => h(App)
+
 }).$mount('#app')

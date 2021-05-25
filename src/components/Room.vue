@@ -10,14 +10,14 @@
             style="cursor: pointer"
             v-if="!hover"
         >
-          <span v-if="color !== 'fhnw'" class="white--text headline">{{ title }}</span>
-          <span v-if="color === 'fhnw'" class="black--text headline">{{ title }}</span>
+          <span v-if="color !== 'fhnw'" class="white--text headline" id="title">{{ title }}</span>
+          <span v-if="color === 'fhnw'" class="black--text headline" id="title">{{ title }}</span>
         </v-avatar>
-        <p class="caption mb-1">{{ creator }}</p>
+        <p class="caption mb-1" id="creator">{{ creator }}</p>
         <v-container>
           <v-row justify="center" align-items="flex-end" align="center">
             <v-col>
-              <v-btn x-small @click="joinRoom" class="mr-2" color="primary">Join</v-btn>
+              <v-btn x-small @click="joinRoom" class="mr-2" color="primary" id="joinBtn">Join</v-btn>
               <v-btn x-small @click="dialog = true" v-if="deletable" class="ml-2"  color="error">Delete</v-btn>
               <v-btn x-small @click="dialog = true" v-if="creator == username && role == 'dozent'" class="ml-2"  color="error">Delete</v-btn>
             </v-col>

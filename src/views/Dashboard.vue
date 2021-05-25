@@ -14,7 +14,7 @@
           </v-row>
         </v-card-title>
         <v-row>
-          <v-col v-for="room in updateRooms" :key="room.name" align="center">
+          <v-col v-for="room in updateRooms" :key="room.name" align="center" data-cy="room.name">
             <Room @delete-room="deleteRoom" :title="room.name" :color="room.type" :deletable="deletable" :id="room._id" :username="username" :role="role" :creator="room.creator"/>
           </v-col>
         </v-row>
