@@ -98,8 +98,7 @@ name: "Room",
 
 .room {
   filter: drop-shadow(0 0 0.1rem #4B4453);
-  border: solid blue;
-  border-width: thin;
+
 }
 
 .room:hover {
