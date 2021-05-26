@@ -27,8 +27,8 @@
         <v-tabs align-with-title>
           <v-tab v-if="!$store.getters.isAuthenticated" to="/">Home</v-tab>
 
-          <v-tab to="/about" v-if="!notChat()">About</v-tab>
-          <v-tab v-if="$store.getters.isAuthenticated && !notChat()" to="/dashboard" >Dashboard</v-tab>
+          <v-tab id="about-btn" to="/about" v-if="!notChat()">About</v-tab>
+          <v-tab id="dashboard-btn" v-if="$store.getters.isAuthenticated && !notChat()" to="/dashboard" >Dashboard</v-tab>
           <v-btn id="back-to-dashboard" v-if="notChat()" color="primary" v-on:click="getDashboard()" class="pa-3" style="margin-left: 10px">Zurück zum Dashboard</v-btn>
           <v-spacer></v-spacer>
         </v-tabs>

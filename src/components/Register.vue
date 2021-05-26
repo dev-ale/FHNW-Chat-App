@@ -7,18 +7,21 @@
           <v-card-text>
             <v-form>
               <v-text-field
+                  id="name"
                   outline
                   label="Name"
                   type="text"
                   v-model="name">
               </v-text-field>
               <v-text-field
+                  id="email"
                   outline
                   label="E-Mail"
                   type="text"
                   v-model="email">
               </v-text-field>
               <v-text-field
+                  id="password"
                   outline
                   hide-details
                   label="Password"
