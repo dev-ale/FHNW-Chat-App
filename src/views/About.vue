@@ -85,6 +85,14 @@ export default {
         title: "PWA (Progressive Web App) Support",
         beschreibung: "Die App lässt sich über Chrome oder als PWA auf einem Smartphone installieren."
       },
+      {
+        title: "Unit Tests",
+        beschreibung: "Sockettest: Hier wird getestet ob ein neuer Room erstellt werden kann und ob man eine Nachricht senden kann. Roomtest: Hier wird getestet ob der Room erstellt wird, ob die Attribute richtig gesetzt werden und ob die Function joinRoom ausgeführt wird."
+      },
+      {
+        title: "E2E Tests Cypress",
+        beschreibung: "In diesen Tests wird getestet ob die App unter der URL erreichbar ist, Es wird getestet ob man sich einloggen und ausloggen kann. Dann wird eine Nachricht versendet. Zuletzt wird noch ein neuer Raum erstellt und wieder gelöscht."
+      },
      ],
      technologien: [
        {
